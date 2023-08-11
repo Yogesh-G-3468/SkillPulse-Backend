@@ -7,7 +7,7 @@ from rest_framework.response import Response
 
 class Greeting(APIView):
 
-    def get(self):
+    def get(self,request):
         return Response({"message":"end point working fine"})
     
 class GetUserAnswers(APIView):
@@ -33,7 +33,15 @@ class GetUserAnswers(APIView):
                     print(z)
                     chatgptsend += z + "\n"
 
+        """
+        code for chatygpt goes here
+        """
+
         print(chatgptsend)
         return Response({"query":chatgptsend})
 
+class NewYogesh(APIView):
+
+    def get(self,request):
+        return Response({"message":"I am yogesh"})
 
