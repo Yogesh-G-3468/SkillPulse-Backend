@@ -31,6 +31,6 @@ class GetUserAnswers(APIView):
                 print(questions)
 
         print(chatgptsend)
-        return Response({"message":"end point working fine"})
+        return Response({"query":chatgptsend})
 
 
