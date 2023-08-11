@@ -34,9 +34,9 @@ class GetUserAnswers(APIView):
                     chatgptsend += z + "\n"
 
         openai.my_api_key = 'YOUR_API_KEY'
-        response = openai.ChatCompletion.create(model="get-3.5-turbo",messages=chatgptsend)
-
-
+        response = openai.ChatCompletion.create(model="get-3.5-turbo",prompt=chatgptsend)
+        message=response.choices[0]
+        print(message)
         print(chatgptsend)
         return Response({"query":chatgptsend})
 
