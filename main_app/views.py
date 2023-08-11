@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework.decorators import APIView
 from rest_framework.response import Response
-
+import openai
 # Create your views here.
 
 
@@ -33,9 +33,9 @@ class GetUserAnswers(APIView):
                     print(z)
                     chatgptsend += z + "\n"
 
-        """
-        code for chatygpt goes here
-        """
+        openai.my_api_key = 'YOUR_API_KEY'
+        response = openai.ChatCompletion.create(model="get-3.5-turbo",messages=chatgptsend)
+
 
         print(chatgptsend)
         return Response({"query":chatgptsend})
