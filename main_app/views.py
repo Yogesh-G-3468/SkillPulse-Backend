@@ -26,9 +26,12 @@ class GetUserAnswers(APIView):
 
         for y in subject[0][x]:
             for questions in y:
-                question = "question: " + questions + "\n"
+                question = "topic: " + questions + "\n"
                 chatgptsend += question
-                print(questions)
+                
+                for z in y[questions]:
+                    print(z)
+                    chatgptsend += z + "\n"
 
         print(chatgptsend)
         return Response({"query":chatgptsend})
