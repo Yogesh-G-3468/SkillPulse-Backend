@@ -3,7 +3,7 @@ from openai.error import OpenAIError
 import re 
 
 
-openai.api_key = "api key"
+openai.api_key = 'your api'
 def generate_chat_response(prompt):
     try:
         # Create a completion request with the specified engine, prompt, and max tokens.
@@ -26,7 +26,12 @@ def generate_chat_response(prompt):
         return None
 
 
-prompt = """I will give you 2 sets of pair of  sentences that must be compared as input, i want you to give me output only in the format I am describing. I dont want anything else as the output. I will fill the space in the output where you must insert your output value as "{}". 
+prompt = """task 1 : I will give you 2 sets of pair of  sentences that must be compared as input, i want you to give me output only in the format I am describing. I dont want anything else as the output.". 
+
+task 2: I will give you 2 sets of pair of  sentences .I want you to take only the sentence 2 and give me all the tags(single letter concepts) that i am strong at inside the <strong></strong> tag and things i am weak at inside <weak></weak> tag, it must be array of words inside both the tags.i want you to give me output only in the format I am describing. I dont want anything else as the output. I will fill the space in the output where you must insert your output value as "{}".
+
+task 3: Give me an suggestion on what to learn and how to learn to improve my knowledge based on my answer in sentence 2. give it in <suggest></suggest> tag
+
 DO'S:
 1)output only in the format i specify
 2)output range from 1 to 10
@@ -36,9 +41,10 @@ DONT'S
 3)no assurance texts like "Understood. Here's the output in the exact format you described, based on the input sentences you provided:"
 
 sample output  for each sets:
-<rating>{}</rating>
-
-Input: """
+<rating></rating>
+<strong>[]</strong>
+<weak>[]</weak>
+<suggest>{}</suggest>\n Input : \n"""
 n=1
 actual_answers =     {
      "DBMS": [
@@ -74,14 +80,24 @@ for i in user_prompt:
                 para2="sentence 2:" +j[k][m]+"\n"
                 prompt+=para1+para2+"\n"
                 n+=1
-print(prompt)
-# print(x:=generate_chat_response(prompt))
-# input_text = x
+#print(prompt)
+print(x:=generate_chat_response(prompt))
+input_text = x
 
-# pattern = r'<rating>(.*?)<\/rating>'
-# matches = re.findall(pattern, input_text)
+pattern = r'<rating>(.*?)<\/rating>'
+pattern2= r'<strong>(.*?)<\/strong>'
+pattern3= r'<weak>(.*?)<\/weak>'
+pattern4= r'<suggest>(.*?)<\/suggest>'
+matches = re.findall(pattern, input_text)
+matches2 = re.findall(pattern2, input_text)
+matches3 = re.findall(pattern3, input_text)
+matches4 = re.findall(pattern4, input_text)
 
-# print(matches)
+
+print(matches)
+print(matches2)
+print(matches3)
+print(matches4)
   
 
 
