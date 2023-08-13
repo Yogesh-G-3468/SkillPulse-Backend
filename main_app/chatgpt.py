@@ -3,7 +3,7 @@ from openai.error import OpenAIError
 import re 
 
 
-openai.api_key = 'opneapi key'
+openai.api_key = "api key"
 def generate_chat_response(prompt):
     try:
         # Create a completion request with the specified engine, prompt, and max tokens.
@@ -24,6 +24,22 @@ def generate_chat_response(prompt):
         # Handle other exceptions.
         print('Exception:', str(e))
         return None
+
+
+prompt = """I will give you 2 sets of pair of  sentences that must be compared as input, i want you to give me output only in the format I am describing. I dont want anything else as the output. I will fill the space in the output where you must insert your output value as "{}". 
+DO'S:
+1)output only in the format i specify
+2)output range from 1 to 10
+DONT'S
+1)Any other text other than the specified output 
+2)No explination and reasoning
+3)no assurance texts like "Understood. Here's the output in the exact format you described, based on the input sentences you provided:"
+
+sample output  for each sets:
+<rating>{}</rating>
+
+Input: """
+n=1
 actual_answers =     {
      "DBMS": [
         {
@@ -51,27 +67,21 @@ p=0
 
 for i in user_prompt:
     for j in user_prompt[i]:
+        a=actual_answers[i]
         for k in j.keys():
             for m in j[k]:
-                para1="""I will give you 2 sentences as input, i want you to give me output only in the format I am describing.I dont want anything else as the output. I will fill the space in the output where you must insert your output value as "{}". 
-DO'S:
-1)output only in the format i specify
-2)output range from 1 to 10
-DONT'S
-1)Any other text other than the specified output 
-2)No explination and reasoning
-3)no assurance texts like "Understood. Here's the output in the exact format you described, based on the input sentences you provided:"
-
-sample output :
-<rating>{}</rating>
-
-Input: \n sentence 1: """+actual_answers["DBMS"][0]["create"][m]+"\n"
+                para1="\nset "+str(n)+"\n"+"\nsentence 1:"+a[0][k][m]+"\n"
                 para2="sentence 2:" +j[k][m]+"\n"
-                prompt=para1+para2
-                x=generate_chat_response(prompt)
-                input_text = x
+                prompt+=para1+para2+"\n"
+                n+=1
+print(prompt)
+# print(x:=generate_chat_response(prompt))
+# input_text = x
 
-                pattern = r'<rating>(.*?)<\/rating>'
-                matches = re.findall(pattern, input_text)
+# pattern = r'<rating>(.*?)<\/rating>'
+# matches = re.findall(pattern, input_text)
 
-                print(matches)
+# print(matches)
+  
+
+
