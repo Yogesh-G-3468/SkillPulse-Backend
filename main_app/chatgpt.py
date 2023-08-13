@@ -83,11 +83,27 @@ class AIresponse:
         pattern2= r'<strong>(.*?)<\/strong>'
         pattern3= r'<weak>(.*?)<\/weak>'
         pattern4= r'<suggest>(.*?)<\/suggest>'
-        matches = re.findall(pattern, input_text)
-        matches2 = re.findall(pattern2, input_text)
-        matches3 = re.findall(pattern3, input_text)
-        matches4 = re.findall(pattern4, input_text)
-        return matches,matches2,matches3,matches4
+        scores=[]
+        scores.append(re.findall(pattern, input_text))
+        scores.append(re.findall(pattern2, input_text))
+        scores.append(re.findall(pattern3, input_text))
+        scores.append(re.findall(pattern4, input_text))
+        return scores
+    
+    def jsonify(self,scores):
+      output={}
+      
+      for i in scores:
+          output["DBMS"]={}
+          for j in range (1,len(i)+1):
+            output["DBMS"][j]={}
+      a=1
+      for subscore in zip(scores[0],scores[1],scores[2],scores[3]):
+        output["DBMS"][a]=list(subscore)
+        a+=1
+      return output
+                
+
 
 
 
@@ -107,8 +123,9 @@ if __name__ == '__main__':
 
     ai = AIresponse()
 
-    print(ai.generate_prompt("DBMS",user_prompt))
-
+    prompt=ai.generate_prompt("DBMS",user_prompt)
+    scores=ai.extraction(ai.generate_chat_response(prompt))
+    print(ai.jsonify(scores))
 
 #print(prompt)
 # print(x:=generate_chat_response(prompt))
