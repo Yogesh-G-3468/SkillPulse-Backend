@@ -44,4 +44,3 @@ class NewYogesh(APIView):
 
     def get(self,request):
         return Response({"message":"I am yogesh"})
-
