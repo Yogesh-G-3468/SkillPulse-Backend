@@ -6,7 +6,7 @@ import re
 class AIresponse:
     def generate_chat_response(self,prompt):
 
-        openai.api_key = 'your api'
+        openai.api_key = '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'
         try:
             # Create a completion request with the specified engine, prompt, and max tokens.
             response = openai.ChatCompletion.create(
@@ -34,16 +34,16 @@ class AIresponse:
         actual_answers ={
                         "DBMS": [
                             {
-                              1:"Database is a collection of data in some organized way to facilitate its users to easily access, manage and upload the data.",
-                              2:"Normalization is the process of analyzing the relational schemas which are based on their respective functional dependencies and the primary keys in order to fulfill certain properties."
-                
+                              '1':"Database is a collection of data in some organized way to facilitate its users to easily access, manage and upload the data.",
+                              '2':"Normalization is the process of analyzing the relational schemas which are based on their respective functional dependencies and the primary keys in order to fulfill certain properties.",
+                              '3' :"a primary key is a special field or set of fields that uniquely identify each record in a table. It ensures that each row in the table has a distinct identity and no two rows can have the same primary key value. The primary key is used to establish relationships between tables, enforce data integrity, and provide a quick way to locate specific records."
                               }
                           ]
                         }
 
         
         
-        prompt = """task 1 : I will give you 2 sets of pair of  sentences that must be compared as input, i want you to give me output only in the format I am describing. I dont want anything else as the output.". 
+        prompt = """task 1 : I will give you many sets of pair of  sentences that must be compared as input, i want you to give me output only in the format I am describing. I dont want anything else as the output.". 
 
         task 2: I will give you 2 sets of pair of  sentences .I want you to take only the sentence 2 and give me all the tags(single letter concepts) that i am strong at inside the <strong></strong> tag and things i am weak at inside <weak></weak> tag, it must be array of words inside both the tags.i want you to give me output only in the format I am describing. I dont want anything else as the output. I will fill the space in the output where you must insert your output value as "{}".
 
@@ -96,10 +96,11 @@ class AIresponse:
       for i in scores:
           output["DBMS"]={}
           for j in range (1,len(i)+1):
-            output["DBMS"][j]={}
+            output["DBMS"][str(j)]={}
       a=1
       for subscore in zip(scores[0],scores[1],scores[2],scores[3]):
-        output["DBMS"][a]=list(subscore)
+        print(subscore)
+        output["DBMS"][str(a)]=list(subscore)
         a+=1
       return output
                 
@@ -114,8 +115,8 @@ if __name__ == '__main__':
     user_prompt = {
           "DBMS": [
             {
-              1:"It is a collection of string in some organized way to facilitate its users to easily delete, manage and upload the files.",
-              2:"Normalization is used to normalize the tables or combine values that are similar based on the requirement"
+              '1':"It is a collection of string in some organized way to facilitate its users to easily delete, manage and upload the files.",
+              '2':"Normalization is used to normalize the tables or combine values that are similar based on the requirement"
                 
               }
           ]
@@ -124,7 +125,14 @@ if __name__ == '__main__':
     ai = AIresponse()
 
     prompt=ai.generate_prompt("DBMS",user_prompt)
-    scores=ai.extraction(ai.generate_chat_response(prompt))
+    print(prompt)
+    #resp = ai.generate_chat_response(prompt)
+    resp = """<rating></rating>
+            <strong>[manage, upload]</strong>
+            <weak>[delete]</weak>
+            <suggest>Learn more about database management and file deletion.</suggest>"""
+    scores=ai.extraction(resp)
+    print(resp)
     print(ai.jsonify(scores))
 
 #print(prompt)

@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from rest_framework.decorators import APIView
 from rest_framework.response import Response
+from .chatgpt import AIresponse
 import openai
 # Create your views here.
 
@@ -14,29 +15,12 @@ class GetUserAnswers(APIView):
 
     def post(self,request):
         subject = request.data.get("UserAnswer")
-        print(type(subject))
-        chatgptsend = "theese are the question i need answer for \n subject:DBMS "
-
         print(subject[0])
+        ai = AIresponse()
 
-        for x in subject[0]:
-            topic = "\n topic: " + x + "\n"
-            chatgptsend += topic
-            print(x)
+        prompt=ai.generate_prompt("DBMS",subject[0])
+        scores=ai.extraction(ai.generate_chat_response(prompt))
+        print(ai.jsonify(scores))
 
-        for y in subject[0][x]:
-            for questions in y:
-                question = "topic: " + questions + "\n"
-                chatgptsend += question
-                
-                for z in y[questions]:
-                    print(z)
-                    chatgptsend += z + "\n"
-
-        print(chatgptsend)
-        return Response({"query":chatgptsend})
-
-class NewYogesh(APIView):
-
-    def get(self,request):
-        return Response({"message":"I am yogesh"})
+        print(prompt)
+        return Response({"scores":ai.jsonify(scores)})
