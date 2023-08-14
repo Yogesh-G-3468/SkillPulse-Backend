@@ -6,7 +6,7 @@ import re
 class AIresponse:
     def generate_chat_response(self,prompt):
 
-        openai.api_key = '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'
+        openai.api_key = ''
         try:
             # Create a completion request with the specified engine, prompt, and max tokens.
             response = openai.ChatCompletion.create(
