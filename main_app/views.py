@@ -9,7 +9,8 @@ import openai
 class Greeting(APIView):
 
     def get(self,request):
-        return Response({"message":"end point working fine"})
+        user = request.user.id
+        return Response({"message":"HI {}".format(user)})
     
 class GetUserAnswers(APIView):
 
@@ -24,3 +25,4 @@ class GetUserAnswers(APIView):
 
         print(prompt)
         return Response({"scores":ai.jsonify(scores)})
+

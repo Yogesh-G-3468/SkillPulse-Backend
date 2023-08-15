@@ -6,7 +6,7 @@ import re
 class AIresponse:
     def generate_chat_response(self,prompt):
 
-        openai.api_key = ''
+        openai.api_key = ""
         try:
             # Create a completion request with the specified engine, prompt, and max tokens.
             response = openai.ChatCompletion.create(
@@ -32,14 +32,17 @@ class AIresponse:
         
         n=1
         actual_answers ={
-                        "DBMS": [
-                            {
-                              '1':"Database is a collection of data in some organized way to facilitate its users to easily access, manage and upload the data.",
-                              '2':"Normalization is the process of analyzing the relational schemas which are based on their respective functional dependencies and the primary keys in order to fulfill certain properties.",
-                              '3' :"a primary key is a special field or set of fields that uniquely identify each record in a table. It ensures that each row in the table has a distinct identity and no two rows can have the same primary key value. The primary key is used to establish relationships between tables, enforce data integrity, and provide a quick way to locate specific records."
-                              }
-                          ]
-                        }
+            "DBMS": [
+        {
+            "1": "Database is a collection of data in some organized way to facilitate its users to easily access, manage and upload the data.",
+            "2": "Normalization is the process of analyzing the relational schemas which are based on their respective functional dependencies and the primary keys in order to fulfill certain properties.",
+            "3": "A primary key is a special field or set of fields that uniquely identify each record in a table. It ensures that each row in the table has a distinct identity and no two rows can have the same primary key value. The primary key is used to establish relationships between tables, enforce data integrity, and provide a quick way to locate specific records.",
+            "4": "In database design, denormalization involves intentionally introducing redundancy into a table structure. This can improve query performance but may lead to data integrity challenges.",
+            "5": "A foreign key is a field in one table that refers to the primary key in another table. It establishes a link between the data in two tables, enabling the creation of relationships.",
+        }
+    ]
+}
+
 
         
         
