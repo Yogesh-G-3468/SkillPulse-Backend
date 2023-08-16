@@ -45,7 +45,6 @@ class GetUserAnswers(APIView):
        
         scores=ai.extraction(x:=ai.generate_chat_response(prompt))
         # print(x)
-        print(ai.jsonify(scores))
 
         return Response({"scores":ai.jsonify(scores)})
         
