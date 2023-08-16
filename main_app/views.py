@@ -16,13 +16,18 @@ class GetUserAnswers(APIView):
 
     def post(self,request):
         subject = request.data.get("UserAnswer")
-        print(subject[0])
+        print(subject)
         ai = AIresponse()
 
-        prompt=ai.generate_prompt("DBMS",subject[0])
-        scores=ai.extraction(ai.generate_chat_response(prompt))
+        # for i in subject["DBMS"]:
+        #     print(subject["DBMS"][i])
+
+        prompt=ai.generate_prompt("DBMS",subject)
+        scores=ai.extraction(x:=ai.generate_chat_response(prompt))
+        print(x)
         print(ai.jsonify(scores))
 
         print(prompt)
         return Response({"scores":ai.jsonify(scores)})
+        #return Response(ai.generate_prompt("DBMS",subject))
 

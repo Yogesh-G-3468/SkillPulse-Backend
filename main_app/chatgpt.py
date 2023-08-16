@@ -32,7 +32,7 @@ class AIresponse:
         
         n=1
         actual_answers ={
-            "DBMS": [
+            "DBMS":
         {
             "1": "Database is a collection of data in some organized way to facilitate its users to easily access, manage and upload the data.",
             "2": "Normalization is the process of analyzing the relational schemas which are based on their respective functional dependencies and the primary keys in order to fulfill certain properties.",
@@ -40,7 +40,6 @@ class AIresponse:
             "4": "In database design, denormalization involves intentionally introducing redundancy into a table structure. This can improve query performance but may lead to data integrity challenges.",
             "5": "A foreign key is a field in one table that refers to the primary key in another table. It establishes a link between the data in two tables, enabling the creation of relationships.",
         }
-    ]
 }
 
 
@@ -68,9 +67,9 @@ class AIresponse:
 
 
 
-        for i in questions[subject][0]:
-            q = questions[subject][0][i]
-            a= actual_answers[subject][0][i]
+        for i in questions[subject]:
+            q = questions[subject][i]
+            a = actual_answers[subject][i]
             
             para1="\nset "+str(n)+"\n"+"\nsentence 1:"+a+"\n"
             para2="sentence 2:" +q+"\n"
@@ -120,7 +119,6 @@ if __name__ == '__main__':
             {
               '1':"It is a collection of string in some organized way to facilitate its users to easily delete, manage and upload the files.",
               '2':"Normalization is used to normalize the tables or combine values that are similar based on the requirement"
-                
               }
           ]
     }
