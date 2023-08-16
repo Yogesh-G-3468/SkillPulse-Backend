@@ -49,7 +49,8 @@ class GetUserAnswers(APIView):
 
             return Response({"scores":ai.jsonify(scores)})
         
-        except:
+        except Exception as e:
+            print(e)
             print("server busy")
             return Response({"message":"Server is busy please wait"})
         # return Response(ai.generate_prompt("DBMS",subject))

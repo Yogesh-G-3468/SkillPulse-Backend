@@ -8,10 +8,11 @@ class Evaluate:
     def __init__(self,subject,avilable_answers) -> None:
         self.subject = subject
         self.avilable_answers = avilable_answers
+        self.indi_mark = [0 for i in range(15)]
 
     def generate_chat_response(self,prompt):
 
-        openai.api_key = "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"
+        openai.api_key = ""
         try:
             # Create a completion request with the specified engine, prompt, and max tokens.
             response = openai.ChatCompletion.create(
@@ -122,13 +123,13 @@ class Evaluate:
     
     def calculate_percentage(self,scores):
 
-        indi_mark = [0 for i in range(15)]
-
-        for x in range(len(scores[0])):
-            indi_mark[int(self.avilable_answers[x])-1] += int(scores[0][x]) 
         
 
-        print(indi_mark)
+        for x in range(len(scores[0])):
+            self.indi_mark[int(self.avilable_answers[x])-1] += int(scores[0][x]) 
+        
+
+        print(self.indi_mark)
 
         if self.subject == "DBMS":
             final_score = {
@@ -153,15 +154,15 @@ class Evaluate:
 
             for i in range(len(indi_mark)):
                 if i < 3:
-                    final_score['application level concepts'] += ((int(indi_mark[i])/30)*100)
+                    final_score['application level concepts'] += ((int(self.indi_mark[i])/30)*100)
                 elif i >= 3 and i < 6:
-                    final_score['hardware concepts'] += ((int(indi_mark[i])/30)*100)
+                    final_score['hardware concepts'] += ((int(self.indi_mark[i])/30)*100)
                 elif i >= 6 and i < 9:
-                    final_score['generic questions'] += ((int(indi_mark[i])/30)*100)
+                    final_score['generic questions'] += ((int(self.indi_mark[i])/30)*100)
                 elif i >= 9 and i < 12:
-                    final_score['data transporation'] += ((int(indi_mark[i])/30)*100)
+                    final_score['data transporation'] += ((int(self.indi_mark[i])/30)*100)
                 elif i >= 12 and i < 15:
-                    final_score['understanding of basic terminologies'] += ((int(indi_mark[i])/30)*100)
+                    final_score['understanding of basic terminologies'] += ((int(self.indi_mark[i])/30)*100)
                 else:
                     pass
                 
@@ -181,7 +182,7 @@ class Evaluate:
         a=1
         for subscore in zip(scores[0],scores[1],scores[2],scores[3]):
             print(subscore)
-            output[self.subject][str(a)]=list(subscore)
+            output[self.subject][str(self.indi_mark(a))]=list(subscore)
             a+=1
         
         final_score = self.calculate_percentage(scores)
