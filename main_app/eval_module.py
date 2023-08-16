@@ -12,7 +12,7 @@ class Evaluate:
 
     def generate_chat_response(self,prompt):
 
-        openai.api_key = ""
+        openai.api_key = "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"
         try:
             # Create a completion request with the specified engine, prompt, and max tokens.
             response = openai.ChatCompletion.create(
@@ -95,7 +95,7 @@ class Evaluate:
 
         for i in questions[self.subject]:
             if questions[self.subject][i] == "":
-                pass
+                continue
             else:
                 q = questions[self.subject][i]
                 a = actual_answers[self.subject][i]
@@ -152,7 +152,7 @@ class Evaluate:
                 "understanding of basic terminologies":0,
             }
 
-            for i in range(len(indi_mark)):
+            for i in range(len(self.indi_mark)):
                 if i < 3:
                     final_score['application level concepts'] += ((int(self.indi_mark[i])/30)*100)
                 elif i >= 3 and i < 6:
@@ -179,10 +179,10 @@ class Evaluate:
             output[self.subject]={}
             for j in range (1,len(i)+1):
                 output[self.subject][str(j)]={}
-        a=1
+        a=0
         for subscore in zip(scores[0],scores[1],scores[2],scores[3]):
             print(subscore)
-            output[self.subject][str(self.indi_mark(a))]=list(subscore)
+            output[self.subject][str(self.avilable_answers[a])]=list(subscore)
             a+=1
         
         final_score = self.calculate_percentage(scores)
