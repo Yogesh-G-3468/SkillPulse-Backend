@@ -13,7 +13,8 @@ payload = {
           "2": "Normalization is employed to standardize database tables or merge values that exhibit similarities based on specified criteria.",
           "3": "The primary key serves as the anchor for a composition. Just as a song revolves around its central theme, a primary key secures the database journey.",
           "4": "Indexes are data structures used to optimize data retrieval speed in a table, working akin to book indexes.",
-          "5": "A foreign key is a field that refers to the primary key in another table, creating links between related data."
+          "5": "A foreign key is a field that refers to the primary key in another table, creating links between related data.",
+          "6":"Leave me alone i dono anything"
         }
     }
 }
@@ -30,4 +31,5 @@ for x in score_val:
     print("Strong:",score_val[x][1])
     print("Weak:",score_val[x][2])
     print("Suggest:",score_val[x][3])
+print(score['final_score'])
 

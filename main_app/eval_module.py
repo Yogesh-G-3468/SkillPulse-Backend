@@ -4,6 +4,10 @@ import re
 
 
 class Evaluate:
+
+    def __init__(self,subject) -> None:
+        self.subject = subject
+
     def generate_chat_response(self,prompt):
 
         openai.api_key = "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"
@@ -28,7 +32,7 @@ class Evaluate:
             return None
 
 
-    def generate_prompt(self,subject, questions):
+    def generate_prompt(self,questions):
         
         n=1
         actual_answers ={
@@ -68,9 +72,9 @@ class Evaluate:
 
 
 
-        for i in questions[subject]:
-            q = questions[subject][i]
-            a = actual_answers[subject][i]
+        for i in questions[self.subject]:
+            q = questions[self.subject][i]
+            a = actual_answers[self.subject][i]
             
             para1="\nset "+str(n)+"\n"+"\nsentence 1:"+a+"\n"
             para2="sentence 2:" +q+"\n"
@@ -93,8 +97,8 @@ class Evaluate:
         scores.append(re.findall(pattern4, input_text))
         return scores
     
-    def calculate_percentage(self,subject,scores):
-        if subject == "DBMS":
+    def calculate_percentage(self,scores):
+        if self.subject == "DBMS":
             final_score = {
                 "Joins":0,
                 "Normalization":0,
@@ -115,18 +119,18 @@ class Evaluate:
         output={}
         
         for i in scores:
-            output["DBMS"]={}
+            output[self.subject]={}
             for j in range (1,len(i)+1):
-                output["DBMS"][str(j)]={}
+                output[self.subject][str(j)]={}
         a=1
         for subscore in zip(scores[0],scores[1],scores[2],scores[3]):
             print(subscore)
-            output["DBMS"][str(a)]=list(subscore)
+            output[self.subject][str(a)]=list(subscore)
             a+=1
         
-        final_score = self.calculate_percentage("DBMS",scores)
+        final_score = self.calculate_percentage(self,scores)
         output['final_score'] = final_score
-        
+
         return output
                 
 

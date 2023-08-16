@@ -15,14 +15,18 @@ class Greeting(APIView):
 class GetUserAnswers(APIView):
 
     def post(self,request):
-        subject = request.data.get("UserAnswer")
+        user_res = request.data.get("UserAnswer")
+        print(user_res)
+        for x in user_res:
+            subject = x
         print(subject)
-        ai = Evaluate()
+        ai = Evaluate(subject)
+
 
         # for i in subject["DBMS"]:
         #     print(subject["DBMS"][i])
 
-        prompt=ai.generate_prompt("DBMS",subject)
+        prompt=ai.generate_prompt(user_res)
         scores=ai.extraction(x:=ai.generate_chat_response(prompt))
         print(x)
         print(ai.jsonify(scores))
