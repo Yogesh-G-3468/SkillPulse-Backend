@@ -5,12 +5,13 @@ import re
 
 class Evaluate:
 
-    def __init__(self,subject) -> None:
+    def __init__(self,subject,avilable_answers) -> None:
         self.subject = subject
+        self.avilable_answers = avilable_answers
 
     def generate_chat_response(self,prompt):
 
-        openai.api_key = "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"
+        openai.api_key = "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"
         try:
             # Create a completion request with the specified engine, prompt, and max tokens.
             response = openai.ChatCompletion.create(
@@ -120,6 +121,15 @@ class Evaluate:
         return scores
     
     def calculate_percentage(self,scores):
+
+        indi_mark = [0 for i in range(15)]
+
+        for x in range(len(scores[0])):
+            indi_mark[int(self.avilable_answers[x])-1] += int(scores[0][x]) 
+        
+
+        print(indi_mark)
+
         if self.subject == "DBMS":
             final_score = {
                 "Joins":0,
@@ -141,17 +151,17 @@ class Evaluate:
                 "understanding of basic terminologies":0,
             }
 
-            for i in range(len(scores[0])):
+            for i in range(len(indi_mark)):
                 if i < 3:
-                    final_score['application level concepts'] += ((int(scores[0][i])/30)*100)
+                    final_score['application level concepts'] += ((int(indi_mark[i])/30)*100)
                 elif i >= 3 and i < 6:
-                    final_score['hardware concepts'] += ((int(scores[0][i])/30)*100)
+                    final_score['hardware concepts'] += ((int(indi_mark[i])/30)*100)
                 elif i >= 6 and i < 9:
-                    final_score['generic questions'] += ((int(scores[0][i])/30)*100)
+                    final_score['generic questions'] += ((int(indi_mark[i])/30)*100)
                 elif i >= 9 and i < 12:
-                    final_score['data transporation'] += ((int(scores[0][i])/30)*100)
+                    final_score['data transporation'] += ((int(indi_mark[i])/30)*100)
                 elif i >= 12 and i < 15:
-                    final_score['understanding of basic terminologies'] += ((int(scores[0][i])/30)*100)
+                    final_score['understanding of basic terminologies'] += ((int(indi_mark[i])/30)*100)
                 else:
                     pass
                 
@@ -196,7 +206,6 @@ if __name__ == '__main__':
           ]
     }
 
-    ai = AIresponse()
 
     prompt=ai.generate_prompt("DBMS",user_prompt)
     print(prompt)
