@@ -10,7 +10,7 @@ class Evaluate:
 
     def generate_chat_response(self,prompt):
 
-        openai.api_key = "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"
+        openai.api_key = "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"
         try:
             # Create a completion request with the specified engine, prompt, and max tokens.
             response = openai.ChatCompletion.create(
@@ -36,7 +36,7 @@ class Evaluate:
         
         n=1
         actual_answers ={
-            "DBMS":
+            "dbms":
         {
             "1": "Database is a collection of data in some organized way to facilitate its users to easily access, manage and upload the data.",
             "2": "Normalization is the process of analyzing the relational schemas which are based on their respective functional dependencies and the primary keys in order to fulfill certain properties.",
@@ -44,6 +44,25 @@ class Evaluate:
             "4": "In database design, denormalization involves intentionally introducing redundancy into a table structure. This can improve query performance but may lead to data integrity challenges.",
             "5": "A foreign key is a field in one table that refers to the primary key in another table. It establishes a link between the data in two tables, enabling the creation of relationships.",
             "6": "A join is a query that combines rows from two or more tables, views, or materialized views. Joins allow you to query data from multiple tables using a single query.",
+        },
+
+            "cn": 
+        {
+            "1": "DNS stands for Domain Name System, and it is a fundamental technology used to translate human-readable domain names into IP addresses. It is used in daily life for efficient browsing, caching, and load balancing.",
+            "2": "A firewall is a network security device or software that acts as a barrier between a trusted internal network and untrusted external networks. Its primary purpose is to monitor, filter, and control network traffic based on security rules.",
+            "3": "The internet and the web are not the same thing. The internet is a global network of computers, while the web is a way of accessing information on the internet.",
+            "4": "Network topology refers to the physical or logical arrangement of devices within a network. Common topologies used in college labs include the star topology.",
+            "5": "A proxy server is an intermediate server that sits between a client device and a destination server. It provides anonymity and privacy by acting as a gateway and forwarding requests.",
+            "6": "Yes, most routers contain a switch inside them. The switch connects different ports on the router to allow devices on the same network to communicate.",
+            "7": "Peer-to-peer is a networking model where each computer acts as both a client and a server. BitTorrent is a P2P file-sharing system that allows users to share files directly.",
+            "8": "Load balancing distributes traffic across multiple servers to improve performance and reliability.",
+            "9": "Yes, data can be shared between systems without the web. Peer-to-peer file sharing, direct file sharing, and shared network file sharing are some ways to do it.",
+            "10": "User Datagram Protocol (UDP) is a transport protocol used for sending data between devices. UDP improves online gaming performance due to its low latency, faster data transmission, and reduced congestion.",
+            "11": "Data in different OSI layers is referred to as bit, frame, packet, and segment.",
+            "12": "Caching involves storing copies of web resources locally to reduce the need for fetching from the original server and improve page load times.",
+            "13": "Bandwidth refers to the maximum data transmission over a network connection. Higher bandwidth does not guarantee faster data speed.",
+            "14": "\"Ping\" is a network utility to test the reachability of a host and measure round-trip time. Lower ping is preferred for better speed.",
+            "15": "The OSI model is a reference model and is not implemented in real life. It is used as a reference for building other models."
         }
 }
 
@@ -73,13 +92,14 @@ class Evaluate:
 
 
         for i in questions[self.subject]:
-            q = questions[self.subject][i]
-            a = actual_answers[self.subject][i]
-            
-            para1="\nset "+str(n)+"\n"+"\nsentence 1:"+a+"\n"
-            para2="sentence 2:" +q+"\n"
-            prompt+=para1+para2+"\n"
-            n+=1
+            if questions[self.subject][i] != " " or "":
+                q = questions[self.subject][i]
+                a = actual_answers[self.subject][i]
+                
+                para1="\nset "+str(n)+"\n"+"\nsentence 1:"+a+"\n"
+                para2="sentence 2:" +q+"\n"
+                prompt+=para1+para2+"\n"
+                n+=1
         
         return prompt
 
@@ -104,11 +124,35 @@ class Evaluate:
                 "Normalization":0,
             }
 
-        for i in range(len(scores[0])):
-            if i < 3:
-                final_score['Joins'] += ((int(scores[0][i])/30)*100)
-            elif i >= 3 and i < 6:
-                final_score['Normalization'] += ((int(scores[0][i])/30)*100)
+            for i in range(len(scores[0])):
+                if i < 3:
+                    final_score['Joins'] += ((int(scores[0][i])/30)*100)
+                elif i >= 3 and i < 6:
+                    final_score['Normalization'] += ((int(scores[0][i])/30)*100)
+        
+        if self.subject == "cn":
+            final_score = {
+                "application level concepts":0,
+                "hardware concepts":0,
+                "generic questions":0,
+                "data transporation":0,
+                "understanding of basic terminologies":0,
+            }
+
+            for i in range(len(scores[0])):
+                if i < 3:
+                    final_score['application level concepts'] += ((int(scores[0][i])/30)*100)
+                elif i >= 3 and i < 6:
+                    final_score['hardware concepts'] += ((int(scores[0][i])/30)*100)
+                elif i >= 6 and i < 9:
+                    final_score['generic questions'] += ((int(scores[0][i])/30)*100)
+                elif i >= 9 and i < 12:
+                    final_score['data transporation'] += ((int(scores[0][i])/30)*100)
+                elif i >= 12 and i < 15:
+                    final_score['understanding of basic terminologies'] += ((int(scores[0][i])/30)*100)
+                else:
+                    pass
+                
             
         return final_score
         
@@ -128,7 +172,7 @@ class Evaluate:
             output[self.subject][str(a)]=list(subscore)
             a+=1
         
-        final_score = self.calculate_percentage(self,scores)
+        final_score = self.calculate_percentage(scores)
         output['final_score'] = final_score
 
         return output

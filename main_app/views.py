@@ -23,15 +23,17 @@ class GetUserAnswers(APIView):
         ai = Evaluate(subject)
 
 
-        # for i in subject["DBMS"]:
-        #     print(subject["DBMS"][i])
+
+        # # for i in subject["DBMS"]:
+        # #     print(subject["DBMS"][i])
 
         prompt=ai.generate_prompt(user_res)
-        scores=ai.extraction(x:=ai.generate_chat_response(prompt))
-        print(x)
-        print(ai.jsonify(scores))
-
         print(prompt)
-        return Response({"scores":ai.jsonify(scores)})
-        #return Response(ai.generate_prompt("DBMS",subject))
+        # scores=ai.extraction(x:=ai.generate_chat_response(prompt))
+        # print(x)
+        # print(ai.jsonify(scores))
+
+        # return Response({"scores":ai.jsonify(scores)})
+        # return Response(ai.generate_prompt("DBMS",subject))
+        return Response({"message":"HI"})
 
