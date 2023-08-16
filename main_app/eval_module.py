@@ -92,7 +92,9 @@ class Evaluate:
 
 
         for i in questions[self.subject]:
-            if questions[self.subject][i] != " " or "":
+            if questions[self.subject][i] == "":
+                pass
+            else:
                 q = questions[self.subject][i]
                 a = actual_answers[self.subject][i]
                 
