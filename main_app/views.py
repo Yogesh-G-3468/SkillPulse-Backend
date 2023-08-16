@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework.decorators import APIView
 from rest_framework.response import Response
-from .chatgpt import AIresponse
+from .eval_module import Evaluate
 import openai
 # Create your views here.
 
@@ -17,7 +17,7 @@ class GetUserAnswers(APIView):
     def post(self,request):
         subject = request.data.get("UserAnswer")
         print(subject)
-        ai = AIresponse()
+        ai = Evaluate()
 
         # for i in subject["DBMS"]:
         #     print(subject["DBMS"][i])

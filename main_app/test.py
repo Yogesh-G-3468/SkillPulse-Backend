@@ -5,17 +5,17 @@ url = "http://127.0.0.1:8000/api/GetRating/"
 
 # Define the JSON payload
 payload = {
-    "UserAnswer": [
+  "UserAnswer": 
+    {
+      "DBMS": 
         {
-            "DBMS": [
-                {
-                    "1": "It is a collection of string in some organized way to facilitate its users to easily delete, manage and upload the files.",
-                    "2": "Normalization is used to normalize the tables or combine values that are similar based on the requirement",
-                    "3": "the primary key sets the tone for a piece. Just as a melody revolves around its central note, a primary key anchors the musical journey"
-                }
-            ]
+          "1": "It is a collection of data in some structured manner to enable users to easily access, manage, and store information.",
+          "2": "Normalization is employed to standardize database tables or merge values that exhibit similarities based on specified criteria.",
+          "3": "The primary key serves as the anchor for a composition. Just as a song revolves around its central theme, a primary key secures the database journey.",
+          "4": "Indexes are data structures used to optimize data retrieval speed in a table, working akin to book indexes.",
+          "5": "A foreign key is a field that refers to the primary key in another table, creating links between related data."
         }
-    ]
+    }
 }
 
 # Send the POST request

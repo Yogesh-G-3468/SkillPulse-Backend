@@ -3,10 +3,10 @@ from openai.error import OpenAIError
 import re 
 
 
-class AIresponse:
+class Evaluate:
     def generate_chat_response(self,prompt):
 
-        openai.api_key = ""
+        openai.api_key = "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"
         try:
             # Create a completion request with the specified engine, prompt, and max tokens.
             response = openai.ChatCompletion.create(
@@ -39,6 +39,7 @@ class AIresponse:
             "3": "A primary key is a special field or set of fields that uniquely identify each record in a table. It ensures that each row in the table has a distinct identity and no two rows can have the same primary key value. The primary key is used to establish relationships between tables, enforce data integrity, and provide a quick way to locate specific records.",
             "4": "In database design, denormalization involves intentionally introducing redundancy into a table structure. This can improve query performance but may lead to data integrity challenges.",
             "5": "A foreign key is a field in one table that refers to the primary key in another table. It establishes a link between the data in two tables, enabling the creation of relationships.",
+            "6": "A join is a query that combines rows from two or more tables, views, or materialized views. Joins allow you to query data from multiple tables using a single query.",
         }
 }
 
@@ -92,19 +93,41 @@ class AIresponse:
         scores.append(re.findall(pattern4, input_text))
         return scores
     
+    def calculate_percentage(self,subject,scores):
+        if subject == "DBMS":
+            final_score = {
+                "Joins":0,
+                "Normalization":0,
+            }
+
+        for i in range(len(scores[0])):
+            if i < 3:
+                final_score['Joins'] += ((int(scores[0][i])/30)*100)
+            elif i >= 3 and i < 6:
+                final_score['Normalization'] += ((int(scores[0][i])/30)*100)
+            
+        return final_score
+        
+    
+
+    
     def jsonify(self,scores):
-      output={}
-      
-      for i in scores:
-          output["DBMS"]={}
-          for j in range (1,len(i)+1):
-            output["DBMS"][str(j)]={}
-      a=1
-      for subscore in zip(scores[0],scores[1],scores[2],scores[3]):
-        print(subscore)
-        output["DBMS"][str(a)]=list(subscore)
-        a+=1
-      return output
+        output={}
+        
+        for i in scores:
+            output["DBMS"]={}
+            for j in range (1,len(i)+1):
+                output["DBMS"][str(j)]={}
+        a=1
+        for subscore in zip(scores[0],scores[1],scores[2],scores[3]):
+            print(subscore)
+            output["DBMS"][str(a)]=list(subscore)
+            a+=1
+        
+        final_score = self.calculate_percentage("DBMS",scores)
+        output['final_score'] = final_score
+        
+        return output
                 
 
 
