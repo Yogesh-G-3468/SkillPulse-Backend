@@ -39,11 +39,9 @@ class GetUserAnswers(APIView):
         # # for i in subject["DBMS"]:
         # #     print(subject["DBMS"][i])
 
-        prompt=ai.generate_prompt(user_res)
-        print(prompt)
+        no_scores = True
 
-       
-        scores=ai.extraction(x:=ai.generate_chat_response(prompt))
+        
         # print(x)
 
         return Response({"scores":ai.jsonify(scores)})
