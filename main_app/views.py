@@ -20,8 +20,6 @@ class GetUserAnswers(APIView):
         for x in user_res:
             subject = x
         print(subject)
-        
-
         avilable_answers = []
         for i in user_res[subject]:
             if user_res[subject][i] == "":
@@ -29,26 +27,15 @@ class GetUserAnswers(APIView):
             else:
                 avilable_answers.append(i)
         print(avilable_answers)
-
         ai = Evaluate(subject,avilable_answers)
-
-        
-
-
-
         # # for i in subject["DBMS"]:
         # #     print(subject["DBMS"][i])
-
         prompt=ai.generate_prompt(user_res)
         print(prompt)
-
-       
         scores=ai.extraction(x:=ai.generate_chat_response(prompt))
         # print(x)
         print(ai.jsonify(scores))
-
         return Response({"scores":ai.jsonify(scores)})
-        
         # except Exception as e:
         #     print(e)
         #     print("server busy")
