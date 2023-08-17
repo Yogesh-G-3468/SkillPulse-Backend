@@ -5,6 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth.models import User
 from .eval_module import Evaluate
 from .DATA import TestModulesHistory,TestTotalMarks
+from .mongo import MongoInsertTest,MongoInsertTotalMark
 # Create your views here.
 
 
@@ -30,7 +31,9 @@ class RegisterNewUser(APIView):
                 "user_id":email,
                 "scores":TestTotalMarks,
             }
-            
+
+            MongoInsertTest(new_user_test_modeule)
+            MongoInsertTotalMark(new_user_total_marks)
             print("new_user_test_modeule:",new_user_test_modeule)
             print("new_user_total_marks:",new_user_total_marks)
 
