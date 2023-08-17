@@ -8,7 +8,7 @@ url2 = "http://127.0.0.1:8000/api/greeting/"
 
 headers = {
     "Content-Type": "application/json",
-    "Authorization": "Token 269faeaf2fa196a32300844362abf4d8d53a5fd2"
+    "Authorization": "Token 5fe5eb3254a3d45aca74ddaad96da2819aa1c4e5"
   }
 
 payload = {
