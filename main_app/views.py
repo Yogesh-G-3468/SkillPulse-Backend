@@ -5,7 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth.models import User
 from .eval_module import Evaluate
 from .DATA import TestModulesHistory,TestTotalMarks
-from .mongo import MongoInsertTest,MongoInsertTotalMark
+from .mongo import MongoInsertTest,MongoInsertTotalMark,MongoRetirveTest,MongoRetirveTotalMarks
 # Create your views here.
 
 
@@ -62,6 +62,23 @@ class Greeting(APIView):
         print("new_user_total_marks:",new_user_total_marks)
         return Response({"message":"HI {}".format(user)})
     
+
+class TestHistory(APIView):
+    permission_classes = ( IsAuthenticated, )
+    def get(self,request):
+        user = request.user.username
+        output = MongoRetirveTest(user)
+        return Response(output["scores"])
+    
+
+class TestMark(APIView):
+    permission_classes = ( IsAuthenticated, )
+    def get(self,request):
+        user = request.user.username
+        output = MongoRetirveTotalMarks(user)
+        return Response(output["scores"])
+    
+
 class GetUserAnswers(APIView):
 
     def post(self,request):
