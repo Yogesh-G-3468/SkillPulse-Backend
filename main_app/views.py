@@ -30,7 +30,7 @@ class RegisterNewUser(APIView):
                 "user_id":email,
                 "scores":TestTotalMarks,
             }
-
+            
             print("new_user_test_modeule:",new_user_test_modeule)
             print("new_user_total_marks:",new_user_total_marks)
 
