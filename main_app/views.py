@@ -1,13 +1,14 @@
 from django.shortcuts import render
 from rest_framework.decorators import APIView
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
 from .eval_module import Evaluate
 import openai
 # Create your views here.
 
 
 class Greeting(APIView):
-
+    permission_classes = ( IsAuthenticated, )
     def get(self,request):
         user = request.user.id
         return Response({"message":"HI {}".format(user)})
