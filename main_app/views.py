@@ -40,7 +40,12 @@ class GetUserAnswers(APIView):
         # #     print(subject["DBMS"][i])
 
         no_scores = True
-
+        while(no_scores):
+            prompt=ai.generate_prompt(user_res)
+            print(prompt)
+            scores=ai.extraction(x:=ai.generate_chat_response(prompt))
+            if scores:
+                no_scores = False
         
         # print(x)
 
