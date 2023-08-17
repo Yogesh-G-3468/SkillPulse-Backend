@@ -2,15 +2,61 @@ from django.shortcuts import render
 from rest_framework.decorators import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
+from django.contrib.auth.models import User
 from .eval_module import Evaluate
-import openai
+from .DATA import TestModulesHistory,TestTotalMarks
 # Create your views here.
 
+
+
+class RegisterNewUser(APIView):
+    def post(self,request):
+        email = request.data.get("email")
+        password = request.data.get("password")
+
+        if password is None or email is None:
+            return Response({"message":"Please provide all the details"})
+        
+        try:
+            user = User.objects.create_user(username=email,password=password)
+            user.save()
+
+            new_user_test_modeule = {
+                "user_id":email,
+                "scores":TestModulesHistory,
+            }
+
+            new_user_total_marks = {
+                "user_id":email,
+                "scores":TestTotalMarks,
+            }
+
+            print("new_user_test_modeule:",new_user_test_modeule)
+            print("new_user_total_marks:",new_user_total_marks)
+
+            return Response({"message":"User Created Successfully"})
+        except Exception as e:
+            print(e)
+            return Response({"message":"User Already Exists"})
+        
 
 class Greeting(APIView):
     permission_classes = ( IsAuthenticated, )
     def get(self,request):
-        user = request.user.id
+        user = request.user.username
+
+        new_user_test_modeule = {
+            "user_id":user,
+            "scores":TestModulesHistory,
+        }
+
+        new_user_total_marks = {
+            "user_id":user,
+            "scores":TestTotalMarks,
+        }
+
+        print("new_user_test_modeule:",new_user_test_modeule)
+        print("new_user_total_marks:",new_user_total_marks)
         return Response({"message":"HI {}".format(user)})
     
 class GetUserAnswers(APIView):
