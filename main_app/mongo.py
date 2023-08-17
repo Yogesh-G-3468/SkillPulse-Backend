@@ -2,7 +2,7 @@ from pymongo import MongoClient
 from pymongo.server_api import ServerApi
 
 
-jumbla = "enter paswrod"
+jumbla = "test123"
 
 
 def MongoInsertTest(history):

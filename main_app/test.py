@@ -3,12 +3,13 @@ import requests
 # Define the URL of the server
 url = "http://127.0.0.1:8000/api/GetRating/"
 url2 = "http://127.0.0.1:8000/api/greeting/"
+url3 = "http://127.0.0.1:8000/api/dbaccess/get-total-marks/"
 
 # Define the JSON payload
 
 headers = {
     "Content-Type": "application/json",
-    "Authorization": "Token 5fe5eb3254a3d45aca74ddaad96da2819aa1c4e5"
+    "Authorization": "Token b1e78f55687b45b06ac0bf64da3cda43ab7c67f8"
   }
 
 payload = {
@@ -40,6 +41,6 @@ payload = {
 #     print("Suggest:",score_val[x][3])
 # print(score['final_score'])
 
-response = requests.get(url2,headers=headers)
+response = requests.get(url3,headers=headers)
 
 print(response.json())
