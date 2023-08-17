@@ -30,12 +30,18 @@ class GetUserAnswers(APIView):
         ai = Evaluate(subject,avilable_answers)
         # # for i in subject["DBMS"]:
         # #     print(subject["DBMS"][i])
-        prompt=ai.generate_prompt(user_res)
-        print(prompt)
-        scores=ai.extraction(x:=ai.generate_chat_response(prompt))
+        
+        try:
+            prompt=ai.generate_prompt(user_res)
+            print(prompt)
+            scores=ai.extraction(x:=ai.generate_chat_response(prompt))
+            return Response({"scores":ai.jsonify(scores)})
+
+        except Exception as e:
+            print("error:",e)
+            return Response({"message":"server is busy"})
+        
         # print(x)
-        print(ai.jsonify(scores))
-        return Response({"scores":ai.jsonify(scores)})
         # except Exception as e:
         #     print(e)
         #     print("server busy")

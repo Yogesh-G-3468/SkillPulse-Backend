@@ -12,7 +12,7 @@ class Evaluate:
 
     def generate_chat_response(self,prompt):
 
-        openai.api_key = "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"
+        openai.api_key = ""
         try:
             # Create a completion request with the specified engine, prompt, and max tokens.
             response = openai.ChatCompletion.create(
@@ -129,7 +129,7 @@ class Evaluate:
             self.indi_mark[int(self.avilable_answers[x])-1] += int(scores[0][x]) 
         
 
-        print(self.indi_mark)
+        print("this iss the problem ------->",self.indi_mark)
 
         if self.subject == "DBMS":
             final_score = {
