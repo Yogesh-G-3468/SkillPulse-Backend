@@ -102,6 +102,7 @@ class GetUserAnswers(APIView):
         prompt=ai.generate_prompt(user_res)
         print(prompt)
         scores=ai.extraction(x:=ai.generate_chat_response(prompt))
+        print("gpt generated response::::",x)
         return Response({"scores":ai.jsonify(scores)})
 
         

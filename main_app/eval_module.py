@@ -12,7 +12,7 @@ class Evaluate:
 
     def generate_chat_response(self,prompt):
 
-        openai.api_key = ""
+        openai.api_key = "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"
         try:
             # Create a completion request with the specified engine, prompt, and max tokens.
             response = openai.ChatCompletion.create(
@@ -45,7 +45,6 @@ class Evaluate:
             "3": "A primary key is a special field or set of fields that uniquely identify each record in a table. It ensures that each row in the table has a distinct identity and no two rows can have the same primary key value. The primary key is used to establish relationships between tables, enforce data integrity, and provide a quick way to locate specific records.",
             "4": "In database design, denormalization involves intentionally introducing redundancy into a table structure. This can improve query performance but may lead to data integrity challenges.",
             "5": "A foreign key is a field in one table that refers to the primary key in another table. It establishes a link between the data in two tables, enabling the creation of relationships.",
-            "6": "A join is a query that combines rows from two or more tables, views, or materialized views. Joins allow you to query data from multiple tables using a single query.",
         },
 
             "cn": 
