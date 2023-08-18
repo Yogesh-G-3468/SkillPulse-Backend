@@ -12,7 +12,7 @@ class Evaluate:
 
     def generate_chat_response(self,prompt):
 
-        openai.api_key = "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"
+        openai.api_key = ""
         try:
             # Create a completion request with the specified engine, prompt, and max tokens.
             response = openai.ChatCompletion.create(

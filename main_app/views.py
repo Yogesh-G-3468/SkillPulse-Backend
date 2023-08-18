@@ -103,18 +103,21 @@ class GetUserAnswers(APIView):
         print(prompt)
         scores=ai.extraction(x:=ai.generate_chat_response(prompt))
         print("gpt generated response::::",x)
-
+        print("this is scores======>",scores)
+        
+        rating = ai.jsonify(scores)
+        
         Indirating = {
             "user_id":request.user.username,
             "subject":subject,
-            "rating":scores
+            "ratings":rating
         }
-
+        
         print("Indirating:",Indirating)
         InsertRating(Indirating)
+        
 
-
-        return Response({"scores":ai.jsonify(scores)})
+        return Response({"scores":rating})
 
         
         

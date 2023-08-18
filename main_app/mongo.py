@@ -45,3 +45,13 @@ def InsertRating(Indirating):
     id = collection.insert_one(Indirating)
     print(id.inserted_id)
     
+def RetriveRating(userid,subject):
+    client = MongoClient("mongodb://localhost:27017")
+    db = client['Scoredata']
+    collection=db['rating']
+
+    x = collection.find_one({"user_id":userid,"subject":subject})
+    return x
+
+# print(RetriveRating("yogi@gmail.com","dbms"))
+# print("\n\n\n",MongoRetirveTotalMarks("yogi@gmail.com"))
