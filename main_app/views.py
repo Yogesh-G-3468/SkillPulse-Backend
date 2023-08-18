@@ -98,15 +98,13 @@ class GetUserAnswers(APIView):
         # # for i in subject["DBMS"]:
         # #     print(subject["DBMS"][i])
         
-        try:
-            prompt=ai.generate_prompt(user_res)
-            print(prompt)
-            scores=ai.extraction(x:=ai.generate_chat_response(prompt))
-            return Response({"scores":ai.jsonify(scores)})
+        
+        prompt=ai.generate_prompt(user_res)
+        print(prompt)
+        scores=ai.extraction(x:=ai.generate_chat_response(prompt))
+        return Response({"scores":ai.jsonify(scores)})
 
-        except Exception as e:
-            print("error:",e)
-            return Response({"message":"server is busy"})
+        
         
         # print(x)
         # except Exception as e:

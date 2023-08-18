@@ -131,7 +131,7 @@ class Evaluate:
 
         print("this iss the problem ------->",self.indi_mark)
 
-        if self.subject == "DBMS":
+        if self.subject == "dbms":
             final_score = {
                 "Joins":0,
                 "Normalization":0,
