@@ -192,54 +192,6 @@ class Evaluate:
         output['final_score'] = final_score
 
         return output
-                
-
-
-
-
-
-
-if __name__ == '__main__':
-# Example usage.
-    user_prompt = {
-          "DBMS": [
-            {
-              '1':"It is a collection of string in some organized way to facilitate its users to easily delete, manage and upload the files.",
-              '2':"Normalization is used to normalize the tables or combine values that are similar based on the requirement"
-              }
-          ]
-    }
-
-
-    prompt=ai.generate_prompt("DBMS",user_prompt)
-    print(prompt)
-    #resp = ai.generate_chat_response(prompt)
-    resp = """<rating></rating>
-            <strong>[manage, upload]</strong>
-            <weak>[delete]</weak>
-            <suggest>Learn more about database management and file deletion.</suggest>"""
-    scores=ai.extraction(resp)
-    print(resp)
-    print(ai.jsonify(scores))
-
-#print(prompt)
-# print(x:=generate_chat_response(prompt))
-# input_text = x
-
-# pattern = r'<rating>(.*?)<\/rating>'
-# pattern2= r'<strong>(.*?)<\/strong>'
-# pattern3= r'<weak>(.*?)<\/weak>'
-# pattern4= r'<suggest>(.*?)<\/suggest>'
-# matches = re.findall(pattern, input_text)
-# matches2 = re.findall(pattern2, input_text)
-# matches3 = re.findall(pattern3, input_text)
-# matches4 = re.findall(pattern4, input_text)
-
-
-# print(matches)
-# print(matches2)
-# print(matches3)
-# print(matches4)
   
 
 

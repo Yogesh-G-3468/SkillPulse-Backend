@@ -5,7 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth.models import User
 from .eval_module import Evaluate
 from .DATA import TestModulesHistory,TestTotalMarks
-from .mongo import MongoInsertTest,MongoInsertTotalMark,MongoRetirveTest,MongoRetirveTotalMarks,InsertRating
+from .mongo import MongoInsertTest,MongoInsertTotalMark,MongoRetirveTest,MongoRetirveTotalMarks,InsertRating,RetriveRating
 # Create your views here.
 
 
@@ -78,6 +78,14 @@ class TestMark(APIView):
         output = MongoRetirveTotalMarks(user)
         return Response(output["scores"])
     
+class RatingRetrive(APIView):
+    permission_classes = ( IsAuthenticated, )
+    def get(self,request):
+        user = request.user.username
+        subject = request.data.get("subject")
+        output = RetriveRating(user,subject)
+        return Response(output["ratings"])
+
 
 class GetUserAnswers(APIView):
     permission_classes = ( IsAuthenticated, )
