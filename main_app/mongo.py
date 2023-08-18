@@ -39,18 +39,20 @@ def MongoRetirveTotalMarks(userid):
 
 
 def InsertRating(Indirating):
-    client = MongoClient("mongodb://localhost:27017")
+    client = MongoClient('mongodb+srv://test:{}@cluster0.1y89bs5.mongodb.net/?retryWrites=true&w=majority'.format(jumbla),server_api=ServerApi('1'))
     db = client['Scoredata']
     collection=db['rating']
     id = collection.insert_one(Indirating)
     print(id.inserted_id)
     
 def RetriveRating(userid,subject):
-    client = MongoClient("mongodb://localhost:27017")
+    client = MongoClient('mongodb+srv://test:{}@cluster0.1y89bs5.mongodb.net/?retryWrites=true&w=majority'.format(jumbla),server_api=ServerApi('1'))
     db = client['Scoredata']
     collection=db['rating']
-
     x = collection.find_one({"user_id":userid,"subject":subject})
     return x
+
+
+
 
 
