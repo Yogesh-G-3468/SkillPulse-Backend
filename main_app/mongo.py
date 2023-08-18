@@ -42,8 +42,14 @@ def InsertRating(Indirating):
     client = MongoClient('mongodb+srv://test:{}@cluster0.1y89bs5.mongodb.net/?retryWrites=true&w=majority'.format(jumbla),server_api=ServerApi('1'))
     db = client['Scoredata']
     collection=db['rating']
-    id = collection.insert_one(Indirating)
-    print(id.inserted_id)
+    if collection.find_one({"user_id":Indirating["user_id"],"subject":Indirating["subject"]})=='None':
+        id = collection.insert_one(Indirating)
+        print(id.inserted_id)
+    else:
+        myquery = {"user_id":Indirating["user_id"],"subject":Indirating["subject"]}
+        newvalues = { "$set": { "ratings":Indirating['ratings'] } }
+        collection.update_one(myquery, newvalues)
+        
     
 def RetriveRating(userid,subject):
     client = MongoClient('mongodb+srv://test:{}@cluster0.1y89bs5.mongodb.net/?retryWrites=true&w=majority'.format(jumbla),server_api=ServerApi('1'))
