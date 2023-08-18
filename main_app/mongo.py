@@ -38,8 +38,10 @@ def MongoRetirveTotalMarks(userid):
         return(x)
 
 
-def InsertRating(rating):
+def InsertRating(Indirating):
     client = MongoClient("mongodb://localhost:27017")
     db = client['Scoredata']
     collection=db['rating']
+    id = collection.insert_one(Indirating)
+    print(id.inserted_id)
     

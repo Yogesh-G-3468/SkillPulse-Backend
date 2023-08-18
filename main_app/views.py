@@ -5,7 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth.models import User
 from .eval_module import Evaluate
 from .DATA import TestModulesHistory,TestTotalMarks
-from .mongo import MongoInsertTest,MongoInsertTotalMark,MongoRetirveTest,MongoRetirveTotalMarks
+from .mongo import MongoInsertTest,MongoInsertTotalMark,MongoRetirveTest,MongoRetirveTotalMarks,InsertRating
 # Create your views here.
 
 
@@ -80,7 +80,7 @@ class TestMark(APIView):
     
 
 class GetUserAnswers(APIView):
-
+    permission_classes = ( IsAuthenticated, )
     def post(self,request):
         user_res = request.data.get("UserAnswer")
         print(user_res)
@@ -103,6 +103,17 @@ class GetUserAnswers(APIView):
         print(prompt)
         scores=ai.extraction(x:=ai.generate_chat_response(prompt))
         print("gpt generated response::::",x)
+
+        Indirating = {
+            "user_id":request.user.username,
+            "subject":subject,
+            "rating":scores
+        }
+
+        print("Indirating:",Indirating)
+        InsertRating(Indirating)
+
+
         return Response({"scores":ai.jsonify(scores)})
 
         
