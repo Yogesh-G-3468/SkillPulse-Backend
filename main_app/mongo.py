@@ -53,5 +53,4 @@ def RetriveRating(userid,subject):
     x = collection.find_one({"user_id":userid,"subject":subject})
     return x
 
-# print(RetriveRating("yogi@gmail.com","dbms"))
-# print("\n\n\n",MongoRetirveTotalMarks("yogi@gmail.com"))
+
