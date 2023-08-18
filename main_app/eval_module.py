@@ -1,6 +1,10 @@
 import openai
 from openai.error import OpenAIError
 import re 
+import os
+from dotenv.main import load_dotenv
+
+ # take environment variables from .env.
 
 
 class Evaluate:
@@ -11,8 +15,8 @@ class Evaluate:
         self.indi_mark = [0 for i in range(15)]
 
     def generate_chat_response(self,prompt):
-
-        openai.api_key = "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"
+        load_dotenv()
+        openai.api_key = os.getenv('KEY')
         try:
             # Create a completion request with the specified engine, prompt, and max tokens.
             response = openai.ChatCompletion.create(
