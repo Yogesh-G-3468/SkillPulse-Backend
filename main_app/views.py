@@ -6,12 +6,16 @@ from django.contrib.auth.models import User
 from .eval_module import Evaluate
 from .DATA import TestModulesHistory,TestTotalMarks
 from .mongo import MongoInsertTest,MongoInsertTotalMark,MongoRetirveTest,MongoRetirveTotalMarks,InsertRating,RetriveRating
+import logging
+import inspect
 # Create your views here.
+logging.basicConfig(level=logging.INFO)
 
 
 
 class RegisterNewUser(APIView):
     def post(self,request):
+        logger = logging.getLogger(inspect.currentframe().f_code.co_name)
         email = request.data.get("email")
         password = request.data.get("password")
 
@@ -21,6 +25,7 @@ class RegisterNewUser(APIView):
         try:
             user = User.objects.create_user(username=email,password=password)
             user.save()
+            logger.info("User {} Created Successfully".format(email))
 
             new_user_test_modeule = {
                 "user_id":email,
@@ -39,6 +44,7 @@ class RegisterNewUser(APIView):
 
             return Response({"message":"User Created Successfully"})
         except Exception as e:
+            logging.error("User Already Exists")
             print(e)
             return Response({"message":"User Already Exists"})
         
@@ -46,27 +52,21 @@ class RegisterNewUser(APIView):
 class Greeting(APIView):
     permission_classes = ( IsAuthenticated, )
     def get(self,request):
+        logger = logging.getLogger(inspect.currentframe().f_code.co_name)
         user = request.user.username
 
-        new_user_test_modeule = {
-            "user_id":user,
-            "scores":TestModulesHistory,
-        }
+        logger.info("User {} came in".format(user))
 
-        new_user_total_marks = {
-            "user_id":user,
-            "scores":TestTotalMarks,
-        }
-
-        print("new_user_test_modeule:",new_user_test_modeule)
-        print("new_user_total_marks:",new_user_total_marks)
         return Response({"message":"HI {}".format(user)})
     
 
 class TestHistory(APIView):
     permission_classes = ( IsAuthenticated, )
     def get(self,request):
+        
         user = request.user.username
+        logger = logging.getLogger(inspect.currentframe().f_code.co_name)
+        logger.info("User {} came in".format(request.user.username))
         output = MongoRetirveTest(user)
         return Response(output["scores"])
     
@@ -74,14 +74,20 @@ class TestHistory(APIView):
 class TestMark(APIView):
     permission_classes = ( IsAuthenticated, )
     def get(self,request):
+        
         user = request.user.username
+        logger = logging.getLogger(inspect.currentframe().f_code.co_name)
+        logger.info("User {} came in".format(request.user.username))
         output = MongoRetirveTotalMarks(user)
         return Response(output["scores"])
     
 class RatingRetrive(APIView):
     permission_classes = ( IsAuthenticated, )
     def get(self,request):
+        
         user = request.user.username
+        logger = logging.getLogger(inspect.currentframe().f_code.co_name)
+        logger.info("User {} came in".format(request.user.username))
         subject = request.data.get("subject")
         output = RetriveRating(user,subject)
         return Response(output["ratings"])
@@ -90,6 +96,8 @@ class RatingRetrive(APIView):
 class GetUserAnswers(APIView):
     permission_classes = ( IsAuthenticated, )
     def post(self,request):
+        logger = logging.getLogger(inspect.currentframe().f_code.co_name)
+        logger.info("User {} came in".format(request.user.username))
         user_res = request.data.get("UserAnswer")
         print(user_res)
         for x in user_res:

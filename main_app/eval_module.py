@@ -3,6 +3,10 @@ from openai.error import OpenAIError
 import re 
 import os
 from dotenv.main import load_dotenv
+import logging
+import inspect
+
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
  # take environment variables from .env.
 
@@ -13,10 +17,13 @@ class Evaluate:
         self.subject = subject
         self.avilable_answers = avilable_answers
         self.indi_mark = [0 for i in range(15)]
+        logger = logging.getLogger(inspect.currentframe().f_code.co_name)
+        logger.info("Evaluate object created")
 
     def generate_chat_response(self,prompt):
         load_dotenv()
         openai.api_key = os.getenv('KEY')
+        logger = logging.getLogger(inspect.currentframe().f_code.co_name)
         try:
             # Create a completion request with the specified engine, prompt, and max tokens.
             response = openai.ChatCompletion.create(
@@ -24,22 +31,26 @@ class Evaluate:
                 messages=[{'role': 'user', 'content': prompt}],
                 max_tokens=1024
             )
+            logger.info("GPT-3 response generated")
             return response.choices[0].message.content
 
         except OpenAIError as error:
             # Handle API errors.
             error_message = error.__class__.__name__ + ': ' + str(error)
             print('API Error:', error_message)
+            logger.error(error_message)
             return None
 
         except Exception as e:
             # Handle other exceptions.
             print('Exception:', str(e))
+            logger.error(str(e))
             return None
 
 
     def generate_prompt(self,questions):
         
+        logger = logging.getLogger(inspect.currentframe().f_code.co_name)
         n=1
         actual_answers ={
             "dbms":
@@ -108,11 +119,12 @@ class Evaluate:
                 prompt+=para1+para2+"\n"
                 n+=1
         
+        logger.info("prompt for the AI generated")
         return prompt
 
 
     def extraction(self,input_text):
-
+        logger = logging.getLogger(inspect.currentframe().f_code.co_name)
         pattern = r'<rating>(.*?)<\/rating>'
         pattern2= r'<strong>(.*?)<\/strong>'
         pattern3= r'<weak>(.*?)<\/weak>'
@@ -122,12 +134,14 @@ class Evaluate:
         scores.append(re.findall(pattern2, input_text))
         scores.append(re.findall(pattern3, input_text))
         scores.append(re.findall(pattern4, input_text))
+
+        logger.info("scores extracted from the AI generated response")
         return scores
     
     def calculate_percentage(self,scores):
 
         
-
+        logger = logging.getLogger(inspect.currentframe().f_code.co_name)
         for x in range(len(scores[0])):
             self.indi_mark[int(self.avilable_answers[x])-1] += int(scores[0][x]) 
         
@@ -169,13 +183,15 @@ class Evaluate:
                 else:
                     pass
                 
-            
+        logger.info("final score calculated")
         return final_score
         
     
 
     
     def jsonify(self,scores):
+
+        logger = logging.getLogger(inspect.currentframe().f_code.co_name)
         output={}
         
         for i in scores:
@@ -195,6 +211,7 @@ class Evaluate:
         final_score = self.calculate_percentage(scores)
         output['final_score'] = final_score
 
+        logger.info("jsonified output generated")
         return output
   
 
