@@ -12,7 +12,7 @@ class Evaluate:
 
     def generate_chat_response(self,prompt):
 
-        openai.api_key = "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"
+        openai.api_key = "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"
         try:
             # Create a completion request with the specified engine, prompt, and max tokens.
             response = openai.ChatCompletion.create(
@@ -180,8 +180,12 @@ class Evaluate:
                 output[self.subject][str(j)]={}
         a=0
         for subscore in zip(scores[0],scores[1],scores[2],scores[3]):
-            print(subscore)
-            output[self.subject][str(self.avilable_answers[a])]=list(subscore)
+            print("this is subscoree ------>",subscore)
+            suggest={"rating":subscore[0],
+                     "Strength":subscore[1],
+                     "Weak":subscore[2],
+                     "Suggestion":subscore[3]}
+            output[self.subject][str(self.avilable_answers[a])]=suggest
             a+=1
         
         final_score = self.calculate_percentage(scores)
