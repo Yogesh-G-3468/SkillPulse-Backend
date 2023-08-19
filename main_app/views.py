@@ -42,11 +42,11 @@ class RegisterNewUser(APIView):
             print("new_user_test_modeule:",new_user_test_modeule)
             print("new_user_total_marks:",new_user_total_marks)
 
-            return Response({"message":"User Created Successfully"})
+            return Response({"message":"User {} Created Successfully".format(email)})
         except Exception as e:
-            logging.error("User Already Exists")
+            logging.error("User {} Already Exists".format(email))
             print(e)
-            return Response({"message":"User Already Exists"})
+            return Response({"message":"User {} Already Exists".format(email)})
         
 
 class Greeting(APIView):
@@ -111,15 +111,13 @@ class GetUserAnswers(APIView):
                 avilable_answers.append(i)
         print(avilable_answers)
         ai = Evaluate(subject,avilable_answers)
-        # # for i in subject["DBMS"]:
-        # #     print(subject["DBMS"][i])
-        
-        
+
         prompt=ai.generate_prompt(user_res)
         print(prompt)
         scores=ai.extraction(x:=ai.generate_chat_response(prompt))
-        print("gpt generated response::::",x)
-        print("this is scores======>",scores)
+
+        print("gpt generated response:",x)
+        print("scores of the user:",scores)
         
         rating = ai.jsonify(scores)
         
@@ -128,20 +126,6 @@ class GetUserAnswers(APIView):
             "subject":subject,
             "ratings":rating
         }
-        
-        print("Indirating:",Indirating)
         InsertRating(Indirating)
-        
 
         return Response({"scores":rating})
-
-        
-        
-        # print(x)
-        # except Exception as e:
-        #     print(e)
-        #     print("server busy")
-        #     return Response({"message":"Server is busy please wait"})
-        # # return Response(ai.generate_prompt("DBMS",subject))
-        # return Response({"message":"HI"})
-
