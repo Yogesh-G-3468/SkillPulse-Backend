@@ -3,8 +3,10 @@ from pymongo.server_api import ServerApi
 import logging
 import inspect
 
-logging.basicConfig(level=logging.INFO)
-
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',handlers=[
+        logging.StreamHandler(),
+        logging.FileHandler("logs.log"),
+    ],)
 jumbla = "test123"
 
 

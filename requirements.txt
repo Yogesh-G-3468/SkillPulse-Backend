@@ -4,3 +4,5 @@ markdown
 django-filter
 django-cors-headers
 pymongo
+openai
+python-dotenv

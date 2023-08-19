@@ -6,7 +6,10 @@ from dotenv.main import load_dotenv
 import logging
 import inspect
 
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',handlers=[
+        logging.StreamHandler(),
+        logging.FileHandler("logs.log"),
+    ],)
 
  # take environment variables from .env.
 

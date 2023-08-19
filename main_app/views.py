@@ -9,7 +9,10 @@ from .mongo import MongoInsertTest,MongoInsertTotalMark,MongoRetirveTest,MongoRe
 import logging
 import inspect
 # Create your views here.
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',handlers=[
+        logging.StreamHandler(),
+        logging.FileHandler("logs.log"),
+    ],)
 
 
 
