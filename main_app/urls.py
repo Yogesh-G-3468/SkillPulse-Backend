@@ -9,7 +9,7 @@ urlpatterns = [
     path('token-auth/', obtain_auth_token, name='api_token_auth'),
     path('register-user/',RegisterNewUser.as_view(),name='register-user'),
     path('dbaccess/get-total-marks/',TestHistory.as_view(),name='get-total-marks'),
-    path('dbaccess/get-test-mark/',TestMark.as_view(),name='get-total-marks'),
+    path('dbaccess/get-test-mark/',TestMark.as_view(),name='get-test-marks'),
     path('dbaccess/get-test-rating/',RatingRetrive.as_view(),name='get-test-rating'),
 ]
 

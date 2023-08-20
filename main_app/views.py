@@ -93,6 +93,7 @@ class RatingRetrive(APIView):
         logger.info("User {} came in".format(request.user.username))
         subject = request.data.get("subject")
         output = RetriveRating(user,subject)
+        print(output)
         return Response(output["ratings"])
 
 
