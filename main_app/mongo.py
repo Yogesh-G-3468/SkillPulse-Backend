@@ -11,7 +11,7 @@ jumbla = "test123"
 
 
 def MongoInsertTest(history):
-    logger = logging.getLogger(inspect.currentframe().f_code.co_name)
+    logger = logging.getLogger("MongoInsertTest")
     client = MongoClient('mongodb+srv://test:{}@cluster0.1y89bs5.mongodb.net/?retryWrites=true&w=majority'.format(jumbla),server_api=ServerApi('1'))
     db = client['Scoredata']
     collec=db['testhistory']
@@ -19,7 +19,7 @@ def MongoInsertTest(history):
     logger.info("Inserted id: {}".format(id.inserted_id))
 
 def MongoInsertTotalMark(totmark):
-    logger = logging.getLogger(inspect.currentframe().f_code.co_name)
+    logger = logging.getLogger("MongoInsertTotalMark")
     client = MongoClient('mongodb+srv://test:{}@cluster0.1y89bs5.mongodb.net/?retryWrites=true&w=majority'.format(jumbla),server_api=ServerApi('1'))
     db = client['Scoredata']
     collection = db['totalmark']
@@ -27,7 +27,7 @@ def MongoInsertTotalMark(totmark):
     logger.info("Inserted id: {}".format(id.inserted_id))
 
 def MongoRetirveTest(userid):
-    logger = logging.getLogger(inspect.currentframe().f_code.co_name)
+    logger = logging.getLogger("MongoRetirveTest")
     client = MongoClient('mongodb+srv://test:{}@cluster0.1y89bs5.mongodb.net/?retryWrites=true&w=majority'.format(jumbla),server_api=ServerApi('1'))
     db = client['Scoredata']
     collection = db['testhistory']
@@ -36,7 +36,7 @@ def MongoRetirveTest(userid):
         return(x)
 
 def MongoRetirveTotalMarks(userid):
-    logger = logging.getLogger(inspect.currentframe().f_code.co_name)
+    logger = logging.getLogger("MongoRetirveTotalMarks")
     client = MongoClient('mongodb+srv://test:{}@cluster0.1y89bs5.mongodb.net/?retryWrites=true&w=majority'.format(jumbla),server_api=ServerApi('1'))
     db = client['Scoredata']
     collection = db['totalmark']
@@ -46,7 +46,7 @@ def MongoRetirveTotalMarks(userid):
 
 
 def InsertRating(Indirating):
-    logger = logging.getLogger(inspect.currentframe().f_code.co_name)
+    logger = logging.getLogger("InsertRating")
     client = MongoClient('mongodb+srv://test:{}@cluster0.1y89bs5.mongodb.net/?retryWrites=true&w=majority'.format(jumbla),server_api=ServerApi('1'))
     db = client['Scoredata']
     collection=db['rating']
@@ -61,7 +61,7 @@ def InsertRating(Indirating):
         
     
 def RetriveRating(userid,subject):
-    logger = logging.getLogger(inspect.currentframe().f_code.co_name)
+    logger = logging.getLogger("RetriveRating")
     client = MongoClient('mongodb+srv://test:{}@cluster0.1y89bs5.mongodb.net/?retryWrites=true&w=majority'.format(jumbla),server_api=ServerApi('1'))
     db = client['Scoredata']
     collection=db['rating']

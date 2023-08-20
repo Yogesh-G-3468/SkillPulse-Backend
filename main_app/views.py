@@ -18,7 +18,7 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(level
 
 class RegisterNewUser(APIView):
     def post(self,request):
-        logger = logging.getLogger(inspect.currentframe().f_code.co_name)
+        logger = logging.getLogger("RegisterNewUser")
         email = request.data.get("email")
         password = request.data.get("password")
 
@@ -55,7 +55,7 @@ class RegisterNewUser(APIView):
 class Greeting(APIView):
     permission_classes = ( IsAuthenticated, )
     def get(self,request):
-        logger = logging.getLogger(inspect.currentframe().f_code.co_name)
+        logger = logging.getLogger("Greeting")
         user = request.user.username
 
         logger.info("User {} came in".format(user))
@@ -68,7 +68,7 @@ class TestHistory(APIView):
     def get(self,request):
         
         user = request.user.username
-        logger = logging.getLogger(inspect.currentframe().f_code.co_name)
+        logger = logging.getLogger("TestHistory")
         logger.info("User {} came in".format(request.user.username))
         output = MongoRetirveTest(user)
         return Response(output["scores"])
@@ -79,7 +79,7 @@ class TestMark(APIView):
     def get(self,request):
         
         user = request.user.username
-        logger = logging.getLogger(inspect.currentframe().f_code.co_name)
+        logger = logging.getLogger("TestMark")
         logger.info("User {} came in".format(request.user.username))
         output = MongoRetirveTotalMarks(user)
         return Response(output["scores"])
@@ -89,7 +89,7 @@ class RatingRetrive(APIView):
     def get(self,request):
         
         user = request.user.username
-        logger = logging.getLogger(inspect.currentframe().f_code.co_name)
+        logger = logging.getLogger("RatingRetrive")
         logger.info("User {} came in".format(request.user.username))
         if user == "test@gmail.com":
             subject = request.query_params.get("subject")
@@ -103,7 +103,7 @@ class RatingRetrive(APIView):
 class GetUserAnswers(APIView):
     permission_classes = ( IsAuthenticated, )
     def post(self,request):
-        logger = logging.getLogger(inspect.currentframe().f_code.co_name)
+        logger = logging.getLogger("GetUserAnswers")
         logger.info("User {} came in".format(request.user.username))
         user_res = request.data.get("UserAnswer")
         print(user_res)

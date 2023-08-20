@@ -20,13 +20,13 @@ class Evaluate:
         self.subject = subject
         self.avilable_answers = avilable_answers
         self.indi_mark = [0 for i in range(15)]
-        logger = logging.getLogger(inspect.currentframe().f_code.co_name)
+        logger = logging.getLogger("Evaluate")
         logger.info("Evaluate object created")
 
     def generate_chat_response(self,prompt):
         load_dotenv()
         openai.api_key = os.getenv('KEY')
-        logger = logging.getLogger(inspect.currentframe().f_code.co_name)
+        logger = logging.getLogger("generate_chat_response")
         try:
             # Create a completion request with the specified engine, prompt, and max tokens.
             response = openai.ChatCompletion.create(
@@ -53,7 +53,7 @@ class Evaluate:
 
     def generate_prompt(self,questions):
         
-        logger = logging.getLogger(inspect.currentframe().f_code.co_name)
+        logger = logging.getLogger("generate_prompt")
         n=1
         actual_answers ={
             "dbms":
@@ -127,7 +127,7 @@ class Evaluate:
 
 
     def extraction(self,input_text):
-        logger = logging.getLogger(inspect.currentframe().f_code.co_name)
+        logger = logging.getLogger("extraction")
         pattern = r'<rating>(.*?)<\/rating>'
         pattern2= r'<strong>(.*?)<\/strong>'
         pattern3= r'<weak>(.*?)<\/weak>'
@@ -144,7 +144,7 @@ class Evaluate:
     def calculate_percentage(self,scores):
 
         
-        logger = logging.getLogger(inspect.currentframe().f_code.co_name)
+        logger = logging.getLogger("calculate_percentage")
         for x in range(len(scores[0])):
             self.indi_mark[int(self.avilable_answers[x])-1] += int(scores[0][x]) 
         
@@ -194,7 +194,7 @@ class Evaluate:
     
     def jsonify(self,scores):
 
-        logger = logging.getLogger(inspect.currentframe().f_code.co_name)
+        logger = logging.getLogger("jsonify")
         output={}
         
         for i in scores:
