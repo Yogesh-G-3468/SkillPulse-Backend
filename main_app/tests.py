@@ -7,30 +7,26 @@ class Testing(unittest.TestCase):
     def __init__(self,methodName='runTest') -> None:
         super().__init__(methodName=methodName)
         self.client = APIClient()
-        self.token = "Token d2b40cba71908e81b165342b182ee723e00cbaf7"
-    def setRoute(self,route,data={}):
-        if data:
-            return self.client.get(reverse(route), data, format='json', HTTP_AUTHORIZATION=self.token)
-        return self.client.get(reverse(route), HTTP_AUTHORIZATION=self.token)
+        self.token = "Token 6ac21766148674d831ccd2f4cbcc44b3e9e3bbf6"
 
 
     def test_greeting(self): 
-        response = self.setRoute('greeting')
+        response = self.client.get(reverse('greeting'), HTTP_AUTHORIZATION=self.token)
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.data["message"], "HI {}".format("yogi@gmail.com"))
+        self.assertEqual(response.data["message"], "HI {}".format("test@gmail.com"))
     
     def test_get_total_marks(self):
-        response = self.setRoute('get-total-marks')
+        response = self.client.get(reverse('get-total-marks'), HTTP_AUTHORIZATION=self.token)
         print(response.json())
         self.assertEqual(response.status_code, 200)
     
     def test_get_test_mark(self):
-        response = self.setRoute('get-test-marks')
+        response = self.client.get(reverse('get-test-marks'), HTTP_AUTHORIZATION=self.token)
         print(response.json())
         self.assertEqual(response.status_code, 200)
     
     def test_get_test_rating(self):
-        response = self.setRoute('get-test-rating',{"subject":"dbms"})
+        response = self.client.get(reverse('get-test-rating'), data = {"subject":"dbms"}, HTTP_AUTHORIZATION=self.token)
         print(response.json())
         self.assertEqual(response.status_code, 200)
     

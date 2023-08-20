@@ -50,7 +50,7 @@ def InsertRating(Indirating):
     client = MongoClient('mongodb+srv://test:{}@cluster0.1y89bs5.mongodb.net/?retryWrites=true&w=majority'.format(jumbla),server_api=ServerApi('1'))
     db = client['Scoredata']
     collection=db['rating']
-    if collection.find_one({"user_id":Indirating["user_id"],"subject":Indirating["subject"]})=='None':
+    if collection.find_one({"user_id":Indirating["user_id"],"subject":Indirating["subject"]})==None:
         id = collection.insert_one(Indirating)
         logger.info("Inserted id: {}".format(id.inserted_id))
     else:

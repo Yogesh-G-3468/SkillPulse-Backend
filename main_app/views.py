@@ -91,7 +91,10 @@ class RatingRetrive(APIView):
         user = request.user.username
         logger = logging.getLogger(inspect.currentframe().f_code.co_name)
         logger.info("User {} came in".format(request.user.username))
-        subject = request.data.get("subject")
+        if user == "test@gmail.com":
+            subject = request.query_params.get("subject")
+        else:
+            subject = request.data.get("subject")
         output = RetriveRating(user,subject)
         print(output)
         return Response(output["ratings"])
