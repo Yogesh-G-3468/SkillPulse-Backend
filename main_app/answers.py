@@ -109,3 +109,26 @@ actual_answers ={
     "15": "Go to Control Panel > Network and Sharing Center. Click on 'Change adapter settings,' right-click your network connection, select 'Properties,' then choose 'Internet Protocol Version 4 (TCP/IPv4)' properties. Choose 'Use the following DNS server addresses' and input preferred and alternate DNS server addresses. Apply and OK."
   }
 }   
+
+
+totest = {
+  "UserAnswer": {
+    "cnEntryTest": {
+      "1": "DNS, which stands for Domain Name System, serves as a crucial technology for translating human-readable domain names into corresponding IP addresses. It plays a pivotal role in everyday browsing by enabling efficient address resolution, caching, and load distribution.",
+      "2": "A firewall operates as a network security mechanism, either through dedicated hardware or software, to establish a protective barrier between trusted internal networks and potentially unsafe external networks. It is responsible for actively monitoring, filtering, and governing network traffic based on predefined security rules.",
+      "3": "It's important to differentiate between the internet and the web. While the internet represents a vast global network of interconnected computers, the web serves as a specific way of accessing information stored on the internet through web pages and websites.",
+      "4": "Network topology refers to the arrangement, either physical or logical, of network devices within a given network. One common topology frequently used in educational environments is the star topology, where devices are centrally connected to a central hub or switch.",
+      "5": "A proxy server functions as an intermediary server positioned between a client device and a destination server. Its primary function involves enhancing privacy, security, and performance by intercepting and forwarding requests on behalf of the client.",
+      "6": "Indeed, many routers incorporate an internal switch. This integrated switch facilitates efficient communication between devices within the same network, allowing them to exchange data seamlessly.",
+      "7": "Peer-to-peer (P2P) represents a decentralized networking model where each individual computer acts as both a client and a server simultaneously. BitTorrent, a widely recognized P2P file-sharing protocol, exemplifies this concept by enabling direct file sharing among users.",
+      "8": "Load balancing stands as a strategic approach to distributing network traffic across multiple servers. Its main objective is to optimize performance and enhance reliability by evenly distributing incoming requests among available server resources.",
+      "9": "Certainly, data sharing is possible between systems even without using the web. Various methods, such as peer-to-peer file sharing, direct file transfers, and shared network file access, offer alternatives for sharing data efficiently.",
+      "10": "User Datagram Protocol (UDP) serves as a transport protocol designed for expedited data transmission between devices. Its attributes, including low latency, rapid data transfer, and minimized congestion, make it particularly beneficial for improving online gaming experiences.",
+      "11": "Within the OSI model, data is encapsulated and referred to differently across its various layers. These terminologies include bits, frames, packets, and segments, representing different stages of data encapsulation and transport.",
+      "12": "Caching involves the strategic practice of storing copies of frequently accessed web resources locally. By doing so, the need for repeated requests to the original server is reduced, leading to enhanced page load times and improved user experiences.",
+      "13": "Bandwidth denotes the maximum data transmission capacity of a network connection. However, it's important to note that higher bandwidth doesn't guarantee faster data speeds, as actual data transfer rates can be influenced by various factors.",
+      "14": "The network utility known as 'Ping' serves the purpose of testing the reachability of a specific host and measuring the round-trip time for data packets. Lower ping times are preferred, as they indicate faster responsiveness and reduced latency.",
+      "15": "The OSI model holds significance as a conceptual reference framework rather than a tangible implementation. It provides a structured blueprint for understanding network communications and serves as the foundation for developing other networking models."
+    }
+  }
+}

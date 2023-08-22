@@ -6,6 +6,7 @@ from dotenv.main import load_dotenv
 import logging
 import inspect
 from .answers import actual_answers
+from .mongo import MongoUpdateTotalMark
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',handlers=[
         logging.StreamHandler(),
@@ -17,10 +18,11 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(level
 
 class Evaluate:
 
-    def __init__(self,subject,avilable_answers) -> None:
+    def __init__(self,subject,avilable_answers,user_id) -> None:
         self.subject = subject
         self.avilable_answers = avilable_answers
         self.indi_mark = [0 for i in range(15)]
+        self.user_id = user_id
         logger = logging.getLogger("Evaluate")
         logger.info("Evaluate object created")
 
@@ -120,56 +122,103 @@ class Evaluate:
 
         print("this iss the problem ------->",self.indi_mark)
 
+        final_score = {}
+
         if "dbms" in self.subject:
             final_score = {
-                "Relational Databases":0,
-                "Database Design":0,
-                "Transactions and Concurrency":0,
-                "Data Storage and Querying":0,
-                "Advanced topics":0,
-                "totalMarks": 0
-            }
-
-            for i in range(len(scores[0])):
-                if i < 3:
-                    final_score['Joins'] += ((int(scores[0][i])/30)*100)
-                elif i >= 3 and i < 6:
-                    final_score['Normalization'] += ((int(scores[0][i])/30)*100)
-        
-        if "os" in self.subject:
-            final_score = {
-                "Operating System Overview":0,
-                "Process Management":0,
-                "Storage Management and File System":0,
-                "I/O Systems":0,
-                "Case Study":0,
-                "totalMarks": 0
-            }
-            
-        if "cn" in self.subject:
-            final_score = {
-                "Introduction and Physical layer":0,
-                "Data link layer and LAN":0,
-                "Network and Routing":0,
-                "Transport layer":0,
-                "Application layer":0,
+                "Relational Databases": 0,
+                "Database Design": 0,
+                "Transactions and Concurrency": 0,
+                "Data Storage and Querying": 0,
+                "Advanced topics": 0,
                 "totalMarks": 0
             }
 
             for i in range(len(self.indi_mark)):
                 if i < 3:
-                    final_score['application level concepts'] += ((int(self.indi_mark[i])/30)*100)
-                elif i >= 3 and i < 6:
-                    final_score['hardware concepts'] += ((int(self.indi_mark[i])/30)*100)
-                elif i >= 6 and i < 9:
-                    final_score['generic questions'] += ((int(self.indi_mark[i])/30)*100)
-                elif i >= 9 and i < 12:
-                    final_score['data transporation'] += ((int(self.indi_mark[i])/30)*100)
-                elif i >= 12 and i < 15:
-                    final_score['understanding of basic terminologies'] += ((int(self.indi_mark[i])/30)*100)
+                    final_score['Relational Databases'] += int((int(self.indi_mark[i]) / 30) * 100)
+                elif 3 <= i < 6:
+                    final_score['Database Design'] += int((int(self.indi_mark[i]) / 30) * 100)
+                elif 6 <= i < 9:
+                    final_score['Transactions and Concurrency'] += int((int(self.indi_mark[i]) / 30) * 100)
+                elif 9 <= i < 12:
+                    final_score['Data Storage and Querying'] += int((int(self.indi_mark[i]) / 30) * 100)
+                elif 12 <= i < 15:
+                    final_score['Advanced topics'] += int((int(self.indi_mark[i]) / 30) * 100)
                 else:
-                    pass
-                
+                    continue
+
+            final_score['totalMarks'] += (final_score['Relational Databases'] + final_score['Database Design'] + final_score['Transactions and Concurrency'] + final_score['Data Storage and Querying'] + final_score['Advanced topics'])/50
+
+            
+
+            if "EntryTest" in self.subject:
+                MongoUpdateTotalMark(final_score,self.user_id,"entryTest","dbms")
+            else:
+                MongoUpdateTotalMark(final_score,self.user_id,"exitTest","dbms")
+
+        elif "os" in self.subject:
+            final_score = {
+                "Operating System Overview": 0,
+                "Process Management": 0,
+                "Storage Management and File System": 0,
+                "I/O Systems": 0,
+                "Case Study": 0,
+                "totalMarks": 0
+            }
+
+            for i in range(len(self.indi_mark)):
+                if i < 3:
+                    final_score['Operating System Overview'] += int((int(self.indi_mark[i]) / 30) * 100)
+                elif 3 <= i < 6:
+                    final_score['Process Management'] += int((int(self.indi_mark[i]) / 30) * 100)
+                elif 6 <= i < 9:
+                    final_score['Storage Management and File System'] += int((int(self.indi_mark[i]) / 30) * 100)
+                elif 9 <= i < 12:
+                    final_score['I/O Systems'] += int((int(self.indi_mark[i]) / 30) * 100)
+                elif 12 <= i < 15:
+                    final_score['Case Study'] += int((int(self.indi_mark[i]) / 30) * 100)
+                else:
+                    continue
+
+            final_score['totalMarks'] += (final_score['Operating System Overview'] + final_score['Process Management'] + final_score['Storage Management and File System'] + final_score['I/O Systems'] + final_score['Case Study'])/50
+
+            if "EntryTest" in self.subject:
+                MongoUpdateTotalMark(final_score,self.user_id,"entryTest","os")
+            else:
+                MongoUpdateTotalMark(final_score,self.user_id,"exitTest","os")
+
+        elif "cn" in self.subject:
+            final_score = {
+                "Introduction and Physical layer": 0,
+                "Data link layer and LAN": 0,
+                "Network and Routing": 0,
+                "Transport layer": 0,
+                "Application layer": 0,
+                "totalMarks": 0
+            }
+
+            for i in range(len(self.indi_mark)):
+                if i < 3:
+                    final_score['Introduction and Physical layer'] += int((int(self.indi_mark[i]) / 30) * 100)
+                elif 3 <= i < 6:
+                    final_score['Data link layer and LAN'] += int((int(self.indi_mark[i]) / 30) * 100)
+                elif 6 <= i < 9:
+                    final_score['Network and Routing'] += int((int(self.indi_mark[i]) / 30) * 100)
+                elif 9 <= i < 12:
+                    final_score['Transport layer'] += int((int(self.indi_mark[i]) / 30) * 100)
+                elif 12 <= i < 15:
+                    final_score['Application layer'] += int((int(self.indi_mark[i]) / 30) * 100)
+                else:
+                    continue
+
+            final_score['totalMarks'] += (final_score['Introduction and Physical layer'] + final_score['Data link layer and LAN'] + final_score['Network and Routing'] + final_score['Transport layer'] + final_score['Application layer'])/50
+
+            if "EntryTest" in self.subject:
+                MongoUpdateTotalMark(final_score,self.user_id,"entryTest","cn")
+            else:
+                MongoUpdateTotalMark(final_score,self.user_id,"exitTest","cn")
+
         logger.info("final score calculated")
         return final_score
         

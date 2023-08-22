@@ -1,6 +1,8 @@
 import unittest
 from django.urls import reverse
 from rest_framework.test import APIClient
+from .answers import totest
+import json
 
 class Testing(unittest.TestCase):
 
@@ -9,6 +11,12 @@ class Testing(unittest.TestCase):
         self.client = APIClient()
         self.token = "Token 6ac21766148674d831ccd2f4cbcc44b3e9e3bbf6"
 
+
+    def test_send_answers(self):
+        json_totest = json.dumps(totest)
+        response = self.client.post(reverse('GetRating'), data = json_totest,content_type='application/json', HTTP_AUTHORIZATION=self.token)
+        print(response.json())
+        self.assertEqual(response.status_code, 200)
 
     def test_greeting(self): 
         response = self.client.get(reverse('greeting'), HTTP_AUTHORIZATION=self.token)

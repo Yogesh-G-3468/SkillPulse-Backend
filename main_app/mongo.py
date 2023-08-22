@@ -25,6 +25,19 @@ def MongoInsertTotalMark(totmark):
     id=collection.insert_one(totmark)
     logger.info("Inserted id: {}".format(id.inserted_id))
 
+def MongoUpdateTotalMark(final_mark,userid,testStatus,subject):
+    logger = logging.getLogger("MongoUpdateTotalMark")
+    client = MongoClient('mongodb+srv://test:{}@cluster0.1y89bs5.mongodb.net/?retryWrites=true&w=majority'.format(jumbla),server_api=ServerApi('1'))
+    db = client['Scoredata']
+    collection = db['totalmark']
+    myquery = {"user_id":userid}
+    path = f"scores.{testStatus}.m2.{subject}"
+    newvalues = { "$set": { path:final_mark } }
+
+    collection.update_one(myquery, newvalues)
+    logger.info("Updated data")
+
+
 def MongoRetirveTest(userid):
     logger = logging.getLogger("MongoRetirveTest")
     client = MongoClient('mongodb+srv://test:{}@cluster0.1y89bs5.mongodb.net/?retryWrites=true&w=majority'.format(jumbla),server_api=ServerApi('1'))

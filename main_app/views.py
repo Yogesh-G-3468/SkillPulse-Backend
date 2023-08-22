@@ -105,7 +105,11 @@ class GetUserAnswers(APIView):
     def post(self,request):
         logger = logging.getLogger("GetUserAnswers")
         logger.info("User {} came in".format(request.user.username))
-        user_res = request.data.get("UserAnswer")
+        if request.user.username == "test@gmail.com":
+            print("test enter")
+            user_res = request.data.get("UserAnswer")
+        else:
+            user_res = request.data.get("UserAnswer")
         print(user_res)
         for x in user_res:
             subject = x
@@ -117,7 +121,7 @@ class GetUserAnswers(APIView):
             else:
                 avilable_answers.append(i)
         print(avilable_answers)
-        ai = Evaluate(subject,avilable_answers)
+        ai = Evaluate(subject,avilable_answers,request.user.username)
 
         prompt=ai.generate_prompt(user_res)
         print(prompt)
