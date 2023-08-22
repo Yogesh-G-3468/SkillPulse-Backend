@@ -1,6 +1,6 @@
 actual_answers ={
             
-            "dbmsEntryTestAnswers": {
+            "dbmsEntryTest": {
     "1": "A foreign key in a database table establishes a relationship by referencing the primary key of another table. It enforces referential integrity, ensuring that values in the foreign key column match existing values in the referenced primary key column, maintaining data consistency and enabling data retrieval across related tables.",
     "2": "A table in a database stores actual data as structured rows and columns, while a view is a virtual table that presents a subset of data from one or more tables, offering a dynamic way to access and manipulate data without altering the underlying structure.",
     "3": "OLTP (Online Transaction Processing) databases are designed for real-time, high-speed transaction processing and manage everyday business operations, focusing on data accuracy and consistency. OLAP (Online Analytical Processing) databases are optimized for complex querying and analysis of large volumes of historical data, providing insights for decision-making and strategic planning.",
