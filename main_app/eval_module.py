@@ -5,6 +5,7 @@ import os
 from dotenv.main import load_dotenv
 import logging
 import inspect
+from .answers import actual_answers
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',handlers=[
         logging.StreamHandler(),
@@ -55,39 +56,7 @@ class Evaluate:
         
         logger = logging.getLogger("generate_prompt")
         n=1
-        actual_answers ={
-            "dbms":
-        {
-            "1": "Database is a collection of data in some organized way to facilitate its users to easily access, manage and upload the data.",
-            "2": "Normalization is the process of analyzing the relational schemas which are based on their respective functional dependencies and the primary keys in order to fulfill certain properties.",
-            "3": "A primary key is a special field or set of fields that uniquely identify each record in a table. It ensures that each row in the table has a distinct identity and no two rows can have the same primary key value. The primary key is used to establish relationships between tables, enforce data integrity, and provide a quick way to locate specific records.",
-            "4": "In database design, denormalization involves intentionally introducing redundancy into a table structure. This can improve query performance but may lead to data integrity challenges.",
-            "5": "A foreign key is a field in one table that refers to the primary key in another table. It establishes a link between the data in two tables, enabling the creation of relationships.",
-        },
-
-            "cn": 
-        {
-            "1": "DNS stands for Domain Name System, and it is a fundamental technology used to translate human-readable domain names into IP addresses. It is used in daily life for efficient browsing, caching, and load balancing.",
-            "2": "A firewall is a network security device or software that acts as a barrier between a trusted internal network and untrusted external networks. Its primary purpose is to monitor, filter, and control network traffic based on security rules.",
-            "3": "The internet and the web are not the same thing. The internet is a global network of computers, while the web is a way of accessing information on the internet.",
-            "4": "Network topology refers to the physical or logical arrangement of devices within a network. Common topologies used in college labs include the star topology.",
-            "5": "A proxy server is an intermediate server that sits between a client device and a destination server. It provides anonymity and privacy by acting as a gateway and forwarding requests.",
-            "6": "Yes, most routers contain a switch inside them. The switch connects different ports on the router to allow devices on the same network to communicate.",
-            "7": "Peer-to-peer is a networking model where each computer acts as both a client and a server. BitTorrent is a P2P file-sharing system that allows users to share files directly.",
-            "8": "Load balancing distributes traffic across multiple servers to improve performance and reliability.",
-            "9": "Yes, data can be shared between systems without the web. Peer-to-peer file sharing, direct file sharing, and shared network file sharing are some ways to do it.",
-            "10": "User Datagram Protocol (UDP) is a transport protocol used for sending data between devices. UDP improves online gaming performance due to its low latency, faster data transmission, and reduced congestion.",
-            "11": "Data in different OSI layers is referred to as bit, frame, packet, and segment.",
-            "12": "Caching involves storing copies of web resources locally to reduce the need for fetching from the original server and improve page load times.",
-            "13": "Bandwidth refers to the maximum data transmission over a network connection. Higher bandwidth does not guarantee faster data speed.",
-            "14": "\"Ping\" is a network utility to test the reachability of a host and measure round-trip time. Lower ping is preferred for better speed.",
-            "15": "The OSI model is a reference model and is not implemented in real life. It is used as a reference for building other models."
-        }
-}
-
-
-        
-        
+         
         prompt = """task 1 : I will give you many sets of pair of  sentences that must be compared as input, i want you to give me output only in the format I am describing. I dont want anything else as the output.". 
 
         task 2: I will give you 2 sets of pair of  sentences .I want you to take only the sentence 2 and give me all the tags(single letter concepts) that i am strong at inside the <strong></strong> tag and things i am weak at inside <weak></weak> tag, it must be array of words inside both the tags.i want you to give me output only in the format I am describing. I dont want anything else as the output. I will fill the space in the output where you must insert your output value as "{}".
@@ -151,10 +120,14 @@ class Evaluate:
 
         print("this iss the problem ------->",self.indi_mark)
 
-        if self.subject == "dbms":
+        if "dbms" in self.subject:
             final_score = {
-                "Joins":0,
-                "Normalization":0,
+                "Relational Databases":0,
+                "Database Design":0,
+                "Transactions and Concurrency":0,
+                "Data Storage and Querying":0,
+                "Advanced topics":0,
+                "totalMarks": 0
             }
 
             for i in range(len(scores[0])):
@@ -163,13 +136,24 @@ class Evaluate:
                 elif i >= 3 and i < 6:
                     final_score['Normalization'] += ((int(scores[0][i])/30)*100)
         
-        if self.subject == "cn":
+        if "os" in self.subject:
             final_score = {
-                "application level concepts":0,
-                "hardware concepts":0,
-                "generic questions":0,
-                "data transporation":0,
-                "understanding of basic terminologies":0,
+                "Operating System Overview":0,
+                "Process Management":0,
+                "Storage Management and File System":0,
+                "I/O Systems":0,
+                "Case Study":0,
+                "totalMarks": 0
+            }
+            
+        if "cn" in self.subject:
+            final_score = {
+                "Introduction and Physical layer":0,
+                "Data link layer and LAN":0,
+                "Network and Routing":0,
+                "Transport layer":0,
+                "Application layer":0,
+                "totalMarks": 0
             }
 
             for i in range(len(self.indi_mark)):
