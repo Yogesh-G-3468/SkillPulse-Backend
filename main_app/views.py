@@ -7,7 +7,10 @@ from .eval_module import Evaluate
 from .DATA import TestModulesHistory,TestTotalMarks
 from .mongo import MongoInsertTest,MongoInsertTotalMark,MongoRetirveTest,MongoRetirveTotalMarks,InsertRating,RetriveRating
 import logging
-import inspect
+from django.conf import settings
+from django.core.mail import send_mail
+from .emails import send_result_mail
+
 # Create your views here.
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',handlers=[
         logging.StreamHandler(),
@@ -59,6 +62,18 @@ class Greeting(APIView):
         user = request.user.username
 
         logger.info("User {} came in".format(user))
+
+        subject = "testing the mail functions"
+        message = "Hi {} welcome to skillpulse".format(user)
+        email_from = settings.EMAIL_HOST_USER
+        recipient_list = ["arjunprakash027@gmail.com",]
+
+        try:
+            send_mail( subject, message, email_from, recipient_list)
+            print("mail sent")
+        except Exception as e:
+            print(e)
+            print("mail not sent")
 
         return Response({"message":"HI {}".format(user)})
     
@@ -138,5 +153,7 @@ class GetUserAnswers(APIView):
             "ratings":rating
         }
         InsertRating(Indirating)
+
+        send_result_mail(rating,subject,request.user.username)
 
         return Response({"scores":rating})

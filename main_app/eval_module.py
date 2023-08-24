@@ -74,10 +74,10 @@ class Evaluate:
         3)no assurance texts like "Understood. Here's the output in the exact format you described, based on the input sentences you provided:"
 
         sample output  for each sets:
-        <rating></rating>
-        <strong>[]</strong>
-        <weak>[]</weak>
-        <suggest>{}</suggest>\n Input : \n"""
+        <rating>number</rating>
+        <strong>['strength1','stregth2']</strong>
+        <weak>['weakness1','weakness2']</weak>
+        <suggest>suggestion</suggest>\n Input : \n"""
 
 
 
