@@ -1,7 +1,7 @@
 from pymongo import MongoClient
 from pymongo.server_api import ServerApi
 import logging
-
+from googlesearch import search
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',handlers=[
         logging.StreamHandler(),
         logging.FileHandler("logs.log"),
@@ -81,7 +81,19 @@ def RetriveRating(userid,subject):
     logger.info("Retrived data")
     return x
 
-
-
-
-
+def RetriveWeakness(userid,subject):
+    logger = logging.getLogger("RetriveWeakness")
+    client =  MongoClient("mongodb://localhost:27017")
+    db = client['Scoredata']
+    send={}
+    send[subject]={} 
+    collection=db['rating']
+    x = collection.find_one({"user_id":userid,"subject":subject})
+    for i in x["rating"][subject]:
+        send[subject][i]={x["rating"][subject][i]["Weak"]} 
+    find = subject+" "
+    for j in send[subject]:
+        query = subject + " " + str(send[subject][j])
+        for m in  search(query, tld='co.in', lang='en', num=2, start=0, stop=2, pause=2):
+            print(m)
+RetriveWeakness("yogi@gmail.com","dbms")
