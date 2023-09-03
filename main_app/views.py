@@ -5,7 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth.models import User
 from .eval_module import Evaluate
 from .DATA import TestModulesHistory,TestTotalMarks
-from .mongo import MongoInsertTest,MongoInsertTotalMark,MongoRetirveTest,MongoRetirveTotalMarks,InsertRating,RetriveRating
+from .Database_functions import MongoInsertTest,MongoInsertTotalMark,MongoRetirveTest,MongoRetirveTotalMarks,InsertRating,RetriveRating,RetriveResources
 import logging
 from django.conf import settings
 from django.core.mail import send_mail
@@ -114,6 +114,21 @@ class RatingRetrive(APIView):
         print(output)
         return Response(output["ratings"])
 
+class ResourcesRetreive(APIView):
+    permission_classes = ( IsAuthenticated, )
+    def get(self,request):
+
+        user = request.user.username
+        logger = logging.getLogger("ResourcesRetreive")
+        logger.info("User {} came in".format(request.user.username))
+        if user == "test@gmail.com":
+            subject = request.query_params.get("subject")
+        else:
+            subject = request.data.get("subject")
+        
+        output = RetriveResources(user,subject)
+        print(output)
+        return Response({"resources":output})
 
 class GetUserAnswers(APIView):
     permission_classes = ( IsAuthenticated, )

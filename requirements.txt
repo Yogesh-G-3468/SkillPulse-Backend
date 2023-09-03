@@ -6,3 +6,4 @@ django-cors-headers
 pymongo
 openai
 python-dotenv
+google

@@ -81,19 +81,23 @@ def RetriveRating(userid,subject):
     logger.info("Retrived data")
     return x
 
-def RetriveWeakness(userid,subject):
+def RetriveResources(userid,subject):
     logger = logging.getLogger("RetriveWeakness")
-    client =  MongoClient("mongodb://localhost:27017")
+    client =  MongoClient('mongodb+srv://test:{}@cluster0.1y89bs5.mongodb.net/?retryWrites=true&w=majority'.format(jumbla),server_api=ServerApi('1'))
     db = client['Scoredata']
-    send={}
-    send[subject]={} 
+    send=[]
+    resources = []
     collection=db['rating']
-    x = collection.find_one({"user_id":userid,"subject":subject})
-    for i in x["rating"][subject]:
-        send[subject][i]={x["rating"][subject][i]["Weak"]} 
-    find = subject+" "
-    for j in send[subject]:
-        query = subject + " " + str(send[subject][j])
+    x = collection.find_one({"user_id":userid,"subject":subject}) 
+    for i in x["ratings"][subject]:
+        print("i value:",i)
+        send.append(x["ratings"][subject][i]["Weak"])
+    print("send:",send)
+    for j in send:
+        query = subject + " " + j
+        print("query:",query)
         for m in  search(query, tld='co.in', lang='en', num=2, start=0, stop=2, pause=2):
-            print(m)
-RetriveWeakness("yogi@gmail.com","dbms")
+            resources.append(m)
+    return resources
+
+#RetriveResources("test@gmail.com","dbms")

@@ -38,6 +38,10 @@ class Testing(unittest.TestCase):
         print(response.json())
         self.assertEqual(response.status_code, 200)
     
+    def test_get_resources(self):
+        response = self.client.get(reverse('get-resources'),data = {"subject":"dbms"}, HTTP_AUTHORIZATION=self.token)
+        print(response.json())
+        self.assertEqual(response.status_code, 200)
 
 
 if __name__ == '__main__':

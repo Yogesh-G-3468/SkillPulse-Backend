@@ -6,7 +6,7 @@ from dotenv.main import load_dotenv
 import logging
 import inspect
 from .answers import actual_answers
-from .mongo import MongoUpdateTotalMark
+from .Database_functions import MongoUpdateTotalMark
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',handlers=[
         logging.StreamHandler(),
