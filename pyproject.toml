@@ -3,7 +3,6 @@ name = "skillpulsebackend"
 version = "0.1.0"
 description = "Backend for skillpulse"
 authors = ["Arjun, Yogesh"]
-readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.10"
