@@ -149,5 +149,6 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER ='aiarjun027@gmail.com'
+load_dotenv(dotenv_path = "main_app/.env")
 EMAIL_HOST_PASSWORD = os.getenv("MAILPASS")
 
