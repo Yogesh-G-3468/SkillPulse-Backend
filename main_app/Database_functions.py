@@ -2,6 +2,8 @@ from pymongo import MongoClient
 from pymongo.server_api import ServerApi
 import logging
 from googlesearch import search
+from datetime import datetime
+
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',handlers=[
         logging.StreamHandler(),
         logging.FileHandler("logs.log"),
@@ -33,9 +35,23 @@ def MongoUpdateTotalMark(final_mark,userid,testStatus,subject):
     myquery = {"user_id":userid}
     path = f"scores.{testStatus}.m2.{subject}"
     newvalues = { "$set": { path:final_mark } }
-
     collection.update_one(myquery, newvalues)
+
+    
+    collection_test_hist = db['testhistory']
+    path_status = f"scores.m2.{subject}.{testStatus}"
+    path_date = f"scores.m2.{subject}.{testStatus}Completion"
+    now = datetime.now()
+    dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
+    print("date and time =", dt_string)
+    new_val_status = { "$set": { path_status:True } }
+    new_val_date = { "$set": { path_date:dt_string } }
+    collection_test_hist.update_one(myquery, new_val_status)
+    collection_test_hist.update_one(myquery, new_val_date)
+
+    
     logger.info("Updated data")
+
 
 
 def MongoRetirveTest(userid):

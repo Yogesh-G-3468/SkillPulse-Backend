@@ -3,39 +3,54 @@ TestModulesHistory = { "m1" : {
         "c/c++" : {
             "subjectName" : "C/C++",
             "entryTest" : False,
-            "exitTest" : False
+            "exitTest" : False,
+            "entryTestCompletion":"",
+            "exitTestCompletion":""
+
         },
         "java" : {
             "subjectName" : "JAVA",
             "entryTest" : False,
-            "exitTest" : False
+            "exitTest" : False,
+            "entryTestCompletion":"",
+            "exitTestCompletion":""
         },
         "oops": {
             "subjectName" : "OOPS",
             "entryTest" : False,
-            "exitTest" : False
+            "exitTest" : False,
+            "entryTestCompletion":"",
+            "exitTestCompletion":""
         },
         "dsa" : {
             "subjectName" : "DSA",
             "entryTest" : False,
-            "exitTest" : False
+            "exitTest" : False,
+            "entryTestCompletion":"",
+            "exitTestCompletion":""
         }
   },
   "m2" : {
         "dbms" : {
             "subjectName" : "DBMS",
             "entryTest" : False,
-            "exitTest" : False
+            "exitTest" : False,
+            "entryTestCompletion":"",
+            "exitTestCompletion":""
         },
         "cn" : {
             "subjectName" : "CN",
             "entryTest" : False,
-            "exitTest" :False
+            "exitTest" :False,
+            "entryTestCompletion":"",
+            "exitTestCompletion":""
         },
         "os" : {
             "subjectName" : "OS",
             "entryTest" : False,
-            "exitTest" : False
+            "exitTest" : False,
+            "entryTestCompletion":"",
+            "exitTestCompletion":""
         }}
   }
 
