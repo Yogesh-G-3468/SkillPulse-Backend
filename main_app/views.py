@@ -175,6 +175,6 @@ class GetUserAnswers(APIView):
 
 class SeniorData(APIView):
     permission_classes = ( IsAuthenticated, )
-    def post(self,request):
+    def get(self,request):
         result = SeniorProfiles()
         return Response(result)
