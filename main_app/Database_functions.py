@@ -100,4 +100,14 @@ def RetriveResources(userid,subject):
             resources.append(m)
     return resources
 
-#RetriveResources("test@gmail.com","dbms")
+def SeniorProfiles():
+    client =  MongoClient('mongodb+srv://test:{}@cluster0.1y89bs5.mongodb.net/?retryWrites=true&w=majority'.format(jumbla),server_api=ServerApi('1'))
+    db = client['Scoredata']
+    db= client['seniordata']
+    collection=db['profiles']
+    x= collection.find("")
+    for i in x:
+         del i["_id"]
+         print(i)
+        
+print(SeniorProfiles())
