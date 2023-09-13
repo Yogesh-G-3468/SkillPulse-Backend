@@ -10,6 +10,7 @@ import logging
 from django.conf import settings
 from django.core.mail import send_mail
 from .emails import send_result_mail
+from flask import request
 
 # Create your views here.
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',handlers=[
@@ -176,10 +177,14 @@ class GetUserAnswers(APIView):
 class SeniorData(APIView):
     permission_classes = ( IsAuthenticated, )
     def get(self,request):
+        logger = logging.getLogger("SeniorData")
+        logger.info("User {} came in".format(request.user.username))
         result = SeniorProfiles()
         return Response({'senior_profiles':result})
     
 class GetScoreboard(APIView):
+    logger = logging.getLogger("GetScoreboard")
+    logger.info("getting accessed")
     def get(self,request):
         score_board = {}
         for x in MongoGetAllUsers():

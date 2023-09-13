@@ -42,6 +42,16 @@ class Testing(unittest.TestCase):
         response = self.client.get(reverse('get-resources'),data = {"subject":"dbms"}, HTTP_AUTHORIZATION=self.token)
         print(response.json())
         self.assertEqual(response.status_code, 200)
+    
+    def test_senior_data(self):
+        response = self.client.get(reverse('get-seniordata'), HTTP_AUTHORIZATION=self.token)
+        print(response.json())
+        self.assertEqual(response.status_code, 200)
+    
+    def test_get_scoreboard(self):
+        response = self.client.get(reverse('get-scoreboard'))
+        print(response.json())
+        self.assertEqual(response.status_code, 200)
 
 
 if __name__ == '__main__':
