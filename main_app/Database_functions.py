@@ -122,8 +122,8 @@ def SeniorProfiles():
     db= client['seniordata']
     collection=db['profiles']
     x= collection.find("")
+    li = []
     for i in x:
          del i["_id"]
-         print(i)
-        
-print(SeniorProfiles())
+         li.append(i)
+    return li

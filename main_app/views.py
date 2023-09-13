@@ -5,7 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth.models import User
 from .eval_module import Evaluate
 from .DATA import TestModulesHistory,TestTotalMarks
-from .Database_functions import MongoInsertTest,MongoInsertTotalMark,MongoRetirveTest,MongoRetirveTotalMarks,InsertRating,RetriveRating,RetriveResources
+from .Database_functions import MongoInsertTest,MongoInsertTotalMark,MongoRetirveTest,MongoRetirveTotalMarks,InsertRating,RetriveRating,RetriveResources,SeniorProfiles
 import logging
 from django.conf import settings
 from django.core.mail import send_mail
@@ -172,3 +172,9 @@ class GetUserAnswers(APIView):
         send_result_mail(rating,subject,request.user.username)
 
         return Response({"scores":rating})
+
+class SeniorData(APIView):
+    permission_classes = ( IsAuthenticated, )
+    def post(self,request):
+        result = SeniorProfiles()
+        return result
