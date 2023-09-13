@@ -127,3 +127,25 @@ def SeniorProfiles():
          del i["_id"]
          li.append(i)
     return li
+
+def MongoGetAllUsers():
+    logger = logging.getLogger("MongoGetAllUsers")
+    client = MongoClient('mongodb+srv://test:{}@cluster0.1y89bs5.mongodb.net/?retryWrites=true&w=majority'.format(jumbla),server_api=ServerApi('1'))
+    db = client['Scoredata']
+    collection = db['totalmark']
+
+    return collection.find()
+
+
+if __name__ == "__main__":
+    #print(SeniorProfiles())
+    score_board = {}
+    for x in MongoGetAllUsers():
+        print(x['user_id'])
+        score_board[x['user_id']] = 0
+        for scores,values in x['scores']['entryTest']['m2'].items():
+            if values['totalMarks'] > 0:
+                score_board[x['user_id']] += (values['totalMarks']/3)*10
+            else:
+                score_board[x['user_id']] += 0
+    print(score_board)

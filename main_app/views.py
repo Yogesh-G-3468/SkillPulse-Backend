@@ -5,7 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth.models import User
 from .eval_module import Evaluate
 from .DATA import TestModulesHistory,TestTotalMarks
-from .Database_functions import MongoInsertTest,MongoInsertTotalMark,MongoRetirveTest,MongoRetirveTotalMarks,InsertRating,RetriveRating,RetriveResources,SeniorProfiles
+from .Database_functions import MongoInsertTest,MongoInsertTotalMark,MongoRetirveTest,MongoRetirveTotalMarks,InsertRating,RetriveRating,RetriveResources,SeniorProfiles,MongoGetAllUsers
 import logging
 from django.conf import settings
 from django.core.mail import send_mail
@@ -177,4 +177,19 @@ class SeniorData(APIView):
     permission_classes = ( IsAuthenticated, )
     def get(self,request):
         result = SeniorProfiles()
-        return Response(result)
+        return Response({'senior_profiles':result})
+    
+class GetScoreboard(APIView):
+    def get(self,request):
+        score_board = {}
+        for x in MongoGetAllUsers():
+            print(x['user_id'])
+            score_board[x['user_id']] = 0
+            for scores,values in x['scores']['entryTest']['m2'].items():
+                if values['totalMarks'] > 0:
+                    score_board[x['user_id']] += (values['totalMarks']/3)*10
+                else:
+                    score_board[x['user_id']] += 0
+        print(score_board)
+        return Response({'score_board': score_board})
+
