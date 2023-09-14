@@ -187,14 +187,16 @@ class GetScoreboard(APIView):
     logger.info("getting accessed")
     def get(self,request):
         score_board = {}
+        all_scores = {}
         for x in MongoGetAllUsers():
             print(x['user_id'])
             score_board[x['user_id']] = 0
+            all_scores[x['user_id']] = x['scores']['entryTest']['m2']
             for scores,values in x['scores']['entryTest']['m2'].items():
                 if values['totalMarks'] > 0:
                     score_board[x['user_id']] += (values['totalMarks']/3)*10
                 else:
                     score_board[x['user_id']] += 0
-        print(score_board)
-        return Response({'score_board': score_board})
+        print({"all_scores":all_scores,"score_board":score_board})
+        return Response({"all_scores":all_scores,"score_board":score_board})
 
