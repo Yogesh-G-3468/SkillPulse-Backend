@@ -191,7 +191,7 @@ class GetScoreboard(APIView):
         for x in MongoGetAllUsers():
             print(x['user_id'])
             score_board[x['user_id']] = 0
-            all_scores[x['user_id']] = x['scores']['entryTest']['m2']
+            all_scores[x['user_id']] = {"entryTest":x['scores']['entryTest']['m2'],"exitTest":x['scores']['exitTest']['m2']}
             for scores,values in x['scores']['entryTest']['m2'].items():
                 if values['totalMarks'] > 0:
                     score_board[x['user_id']] += (values['totalMarks']/3)*10
