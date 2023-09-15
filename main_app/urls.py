@@ -12,7 +12,7 @@ urlpatterns = [
     path('dbaccess/get-test-mark/',TestMark.as_view(),name='get-test-marks'),
     path('dbaccess/get-test-rating/',RatingRetrive.as_view(),name='get-test-rating'),
     path('dbaccess/get-resources/',ResourcesRetreive.as_view(),name='get-resources'),
-    path('dbaccess/seniordata/',SeniorData.as_view(),name='seniordata'),
+    path('dbaccess/get-seniordata/',SeniorData.as_view(),name='get-seniordata'),
     path('dbaccess/get-scoreboard/',GetScoreboard.as_view(),name='get-scoreboard'),
 ]
 

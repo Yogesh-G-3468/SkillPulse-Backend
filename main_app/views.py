@@ -10,6 +10,7 @@ import logging
 from django.conf import settings
 from django.core.mail import send_mail
 from .emails import send_result_mail
+from flask import request
 
 # Create your views here.
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',handlers=[
@@ -176,20 +177,26 @@ class GetUserAnswers(APIView):
 class SeniorData(APIView):
     permission_classes = ( IsAuthenticated, )
     def get(self,request):
+        logger = logging.getLogger("SeniorData")
+        logger.info("User {} came in".format(request.user.username))
         result = SeniorProfiles()
         return Response({'senior_profiles':result})
     
 class GetScoreboard(APIView):
+    logger = logging.getLogger("GetScoreboard")
+    logger.info("getting accessed")
     def get(self,request):
         score_board = {}
+        all_scores = {}
         for x in MongoGetAllUsers():
             print(x['user_id'])
             score_board[x['user_id']] = 0
+            all_scores[x['user_id']] = {"entryTest":x['scores']['entryTest']['m2'],"exitTest":x['scores']['exitTest']['m2']}
             for scores,values in x['scores']['entryTest']['m2'].items():
                 if values['totalMarks'] > 0:
                     score_board[x['user_id']] += (values['totalMarks']/3)*10
                 else:
                     score_board[x['user_id']] += 0
-        print(score_board)
-        return Response({'score_board': score_board})
+        print({"all_scores":all_scores,"score_board":score_board})
+        return Response({"all_scores":all_scores,"score_board":score_board})
 
