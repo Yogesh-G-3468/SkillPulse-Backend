@@ -117,7 +117,7 @@ class RatingRetrive(APIView):
 
 class ResourcesRetreive(APIView):
     permission_classes = ( IsAuthenticated, )
-    def get(self,request):
+    def post(self,request):
 
         user = request.user.username
         logger = logging.getLogger("ResourcesRetreive")
@@ -126,6 +126,8 @@ class ResourcesRetreive(APIView):
             subject = request.query_params.get("subject")
         else:
             subject = request.data.get("subject")
+        
+        print(subject)
         
         output = RetriveResources(user,subject)
         print(output)

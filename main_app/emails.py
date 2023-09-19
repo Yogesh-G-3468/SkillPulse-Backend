@@ -9,7 +9,6 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(level
     ])
 
 def send_result_mail(data,subject,receiver):
-    receiver = "arjunprakash027@gmail.com"
     logger = logging.getLogger("send_result_mail")
     message = "Hi {} \n\nYour SkillPulse results are as follows:\n\n".format(receiver)
     ratings = data[subject]
