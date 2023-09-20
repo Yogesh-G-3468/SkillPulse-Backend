@@ -98,23 +98,35 @@ def RetriveRating(userid,subject):
     return x
 
 def RetriveResources(userid,subject):
-    logger = logging.getLogger("RetriveWeakness")
     client =  MongoClient('mongodb+srv://test:{}@cluster0.1y89bs5.mongodb.net/?retryWrites=true&w=majority'.format(jumbla),server_api=ServerApi('1'))
     db = client['Scoredata']
-    send=[]
-    resources = []
-    collection=db['rating']
-    x = collection.find_one({"user_id":userid,"subject":subject}) 
-    for i in x["ratings"][subject]:
-        print("i value:",i)
-        send.append(x["ratings"][subject][i]["Weak"])
-    print("send:",send)
-    for j in send:
-        query = subject + " " + j
-        print("query:",query)
-        for m in  search(query, tld='co.in', lang='en', num=2, start=0, stop=2, pause=2):
-            resources.append(m)
-    return resources
+    try:
+        logger = logging.getLogger("RetriveWeakness")
+        logger.info("Retriving Resources from DB")
+        collection = db['resourcesStore']
+        x = collection.find_one({"user_id":userid,"subject":subject})
+        return x['resources']
+    except:
+        sub_name = subject[:-8]
+        logger = logging.getLogger("RetriveWeakness")
+        logger.info("retreving resources from google and inserting it into db")
+        send=[]
+        resources = []
+        collection=db['rating']
+        x = collection.find_one({"user_id":userid,"subject":subject}) 
+        for i in x["ratings"][subject]:
+            print("i value:",i)
+            send.append(x["ratings"][subject][i]["Weak"])
+        print("send:",send)
+        for j in send:
+            query = sub_name + " " + j
+            print("query:",query)
+            for m in  search(query, tld='co.in', lang='en', num=2, start=0, stop=2, pause=2):
+                resources.append(m)
+        resources_collection = db['resourcesStore']
+        resources_insert = {"user_id":userid,"subject":subject,"resources":resources}
+        resources_collection.insert_one(resources_insert)
+        return resources
 
 def SeniorProfiles():
     client =  MongoClient('mongodb+srv://test:{}@cluster0.1y89bs5.mongodb.net/?retryWrites=true&w=majority'.format(jumbla),server_api=ServerApi('1'))
