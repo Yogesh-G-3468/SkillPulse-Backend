@@ -118,7 +118,6 @@ class Evaluate:
         logger = logging.getLogger("calculate_percentage")
         for x in range(len(scores[0])):
             self.indi_mark[int(self.avilable_answers[x])-1] += int(scores[0][x]) 
-        
 
         print("this iss the problem ------->",self.indi_mark)
 
@@ -153,9 +152,9 @@ class Evaluate:
             
 
             if "EntryTest" in self.subject:
-                MongoUpdateTotalMark(final_score,self.user_id,"entryTest","dbms")
+                MongoUpdateTotalMark(final_score,self.user_id,"entryTest","dbms","m2")
             else:
-                MongoUpdateTotalMark(final_score,self.user_id,"exitTest","dbms")
+                MongoUpdateTotalMark(final_score,self.user_id,"exitTest","dbms","m2")
 
         elif "os" in self.subject:
             final_score = {
@@ -184,9 +183,9 @@ class Evaluate:
             final_score['totalMarks'] += (final_score['Operating System Overview'] + final_score['Process Management'] + final_score['Storage Management and File System'] + final_score['I/O Systems'] + final_score['Case Study'])/50
 
             if "EntryTest" in self.subject:
-                MongoUpdateTotalMark(final_score,self.user_id,"entryTest","os")
+                MongoUpdateTotalMark(final_score,self.user_id,"entryTest","os","m2")
             else:
-                MongoUpdateTotalMark(final_score,self.user_id,"exitTest","os")
+                MongoUpdateTotalMark(final_score,self.user_id,"exitTest","os","m2")
 
         elif "cn" in self.subject:
             final_score = {
@@ -215,16 +214,151 @@ class Evaluate:
             final_score['totalMarks'] += (final_score['Introduction and Physical layer'] + final_score['Data link layer and LAN'] + final_score['Network and Routing'] + final_score['Transport layer'] + final_score['Application layer'])/50
 
             if "EntryTest" in self.subject:
-                MongoUpdateTotalMark(final_score,self.user_id,"entryTest","cn")
+                MongoUpdateTotalMark(final_score,self.user_id,"entryTest","cn","m2")
             else:
-                MongoUpdateTotalMark(final_score,self.user_id,"exitTest","cn")
+                MongoUpdateTotalMark(final_score,self.user_id,"exitTest","cn","m2")
 
         logger.info("final score calculated")
         return final_score
         
     
+    def mcqPercentage(self,score):
+        logger = logging.getLogger("mcqPercentage")
+        
+        if 'c/c++' in self.subject:
+            final_score = {
+                "Basic Syntax and Language Fundamentals":0,
+                "Functions and Scope":0,
+                "Arrays and Pointers":0,
+                "Object-Oriented Programming (C++)":0,
+                "File Handling and Input/Output":0,
+                "totalMarks":0
+            }
 
-    
+            for i in range(1,len(score)+1):
+                if i < 3:
+                    final_score['Basic Syntax and Language Fundamentals'] += int((int(score[str(i)]) / 3) * 100)
+                elif 3 <= i < 6:
+                    final_score['Functions and Scope'] += int((int(score[str(i)]) / 3) * 100)
+                elif 6 <= i < 9:
+                    final_score['Arrays and Pointers'] += int((int(score[str(i)]) / 3) * 100)
+                elif 9 <= i < 12:
+                    final_score['Object-Oriented Programming (C++)'] += int((int(score[str(i)]) / 3) * 100)
+                elif 12 <= i < 16:
+                    final_score['File Handling and Input/Output'] += int((int(score[str(i)]) / 3) * 100)
+                else:
+                    continue
+
+            final_score['totalMarks'] += (final_score['Basic Syntax and Language Fundamentals'] + final_score['Functions and Scope'] + final_score['Arrays and Pointers'] + final_score['Object-Oriented Programming (C++)'] + final_score['File Handling and Input/Output'])/50
+
+            if "EntryTest" in self.subject:
+                MongoUpdateTotalMark(final_score,self.user_id,"entryTest","c/c++","m1")
+            else:
+                MongoUpdateTotalMark(final_score,self.user_id,"exitTest","c/c++","m1")
+            
+            print(final_score)
+            
+        elif 'java' in self.subject:
+            final_score = {
+                "inheritance":0,
+                "polymorphism":0,
+                "encapsulation":0,
+                "abstraction":0,
+                "interfaces":0,
+                "totalMarks":0
+            }
+
+            print(len(score))
+            print(score)
+            for i in range(1,len(score)+1):
+                if i < 3:
+                    final_score['inheritance'] += int((int(score[str(i)]) / 3) * 100)
+                elif 3 <= i < 6:
+                    final_score['polymorphism'] += int((int(score[str(i)]) / 3) * 100)
+                elif 6 <= i < 9:
+                    final_score['encapsulation'] += int((int(score[str(i)]) / 3) * 100)
+                elif 9 <= i < 12:
+                    final_score['abstraction'] += int((int(score[str(i)]) / 3) * 100)
+                elif 12 <= i < 16:
+                    final_score['interfaces'] += int((int(score[str(i)]) / 3) * 100)
+                else:
+                    continue
+        
+
+            final_score["totalMarks"] = (final_score["inheritance"] + final_score["polymorphism"] + final_score["encapsulation"] + final_score["abstraction"] + final_score["interfaces"])/50
+
+            if "EntryTest" in self.subject:
+                MongoUpdateTotalMark(final_score,self.user_id,"entryTest","java","m1")
+            else:
+                MongoUpdateTotalMark(final_score,self.user_id,"exitTest","java","m1")
+                
+            print(final_score)
+        
+        elif "oops" in self.subject:
+            final_score = {
+                "Object": 0,
+                "classes": 0,
+                "objects": 0,
+                "constructors": 0,
+                "methods": 0,
+                "inheritance": 0,
+                "totalMarks": 0
+            }
+
+            for i in range(1,len(score)+1):
+                if i < 3:
+                    final_score['Object'] += int((int(self.score[str(i)]) / 3) * 100)
+                elif 3 <= i < 6:
+                    final_score['classes'] += int((int(self.score[str(i)]) / 3) * 100)
+                elif 6 <= i < 9:
+                    final_score['objects'] += int((int(self.score[str(i)]) / 3) * 100)
+                elif 9 <= i < 12:
+                    final_score['constructors'] += int((int(self.score[str(i)]) / 3) * 100)
+                elif 12 <= i < 15:
+                    final_score['methods'] += int((int(self.score[str(i)]) / 3) * 100)
+                else:
+                    final_score['inheritance'] += int((int(self.score[i]) / 3) * 100)
+
+            final_score['totalMarks'] += (final_score['Object'] + final_score['classes'] + final_score['objects'] + final_score['constructors'] + final_score['methods'] + final_score['inheritance'])/60
+
+            if "EntryTest" in self.subject:
+                MongoUpdateTotalMark(final_score,self.user_id,"entryTest","oops","m1")
+            else:
+                MongoUpdateTotalMark(final_score,self.user_id,"exitTest","oops","m1")
+
+        elif "dsa" in self.subject:
+            final_score = {
+                "arrays": 0,
+                "linkedLists": 0,
+                "stacks": 0,
+                "queues": 0,
+                "trees": 0,
+                "totalMarks": 0
+            }
+
+            for i in range(1,len(score)+1 ):
+                if i < 3:
+                    final_score['arrays'] += int((int(self.score[str(i)]) / 3) * 100)
+                elif 3 <= i < 6:
+                    final_score['linkedLists'] += int((int(self.score[str(i)]) / 3) * 100)
+                elif 6 <= i < 9:
+                    final_score['stacks'] += int((int(self.score[str(i)]) / 3) * 100)
+                elif 9 <= i < 12:
+                    final_score['queues'] += int((int(self.score[str(i)]) / 3) * 100)
+                else:
+                    final_score['trees'] += int((int(self.score[str(i)]) / 3) * 100)
+
+            final_score['totalMarks'] += (final_score['arrays'] + final_score['linkedLists'] + final_score['stacks'] + final_score['queues'] + final_score['trees'])/50
+
+            if "EntryTest" in self.subject:
+                MongoUpdateTotalMark(final_score,self.user_id,"entryTest","dsa","m1")
+            else:
+                MongoUpdateTotalMark(final_score,self.user_id,"exitTest","dsa","m1")
+            
+            logger.info("mcq output generated")
+        
+
+        
     def jsonify(self,scores):
 
         logger = logging.getLogger("jsonify")

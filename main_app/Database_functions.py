@@ -27,20 +27,20 @@ def MongoInsertTotalMark(totmark):
     id=collection.insert_one(totmark)
     logger.info("Inserted id: {}".format(id.inserted_id))
 
-def MongoUpdateTotalMark(final_mark,userid,testStatus,subject):
+def MongoUpdateTotalMark(final_mark,userid,testStatus,subject,testType):
     logger = logging.getLogger("MongoUpdateTotalMark")
     client = MongoClient('mongodb+srv://test:{}@cluster0.1y89bs5.mongodb.net/?retryWrites=true&w=majority'.format(jumbla),server_api=ServerApi('1'))
     db = client['Scoredata']
     collection = db['totalmark']
     myquery = {"user_id":userid}
-    path = f"scores.{testStatus}.m2.{subject}"
+    path = f"scores.{testStatus}.{testType}.{subject}"
     newvalues = { "$set": { path:final_mark } }
     collection.update_one(myquery, newvalues)
 
     
     collection_test_hist = db['testhistory']
-    path_status = f"scores.m2.{subject}.{testStatus}"
-    path_date = f"scores.m2.{subject}.{testStatus}Completion"
+    path_status = f"scores.{testType}.{subject}.{testStatus}"
+    path_date = f"scores.{testType}.{subject}.{testStatus}Completion"
     now = datetime.now()
     dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
     print("date and time =", dt_string)

@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import Greeting,GetUserAnswers,RegisterNewUser,TestHistory,TestMark,RatingRetrive,ResourcesRetreive,SeniorData,GetScoreboard
+from .views import Greeting,GetUserAnswers,RegisterNewUser,TestHistory,TestMark,RatingRetrive,ResourcesRetreive,SeniorData,GetScoreboard,GetUserAnswersmcq
 from rest_framework.authtoken.views import obtain_auth_token
 
 urlpatterns = [
@@ -14,5 +14,7 @@ urlpatterns = [
     path('dbaccess/get-resources/',ResourcesRetreive.as_view(),name='get-resources'),
     path('dbaccess/get-seniordata/',SeniorData.as_view(),name='get-seniordata'),
     path('dbaccess/get-scoreboard/',GetScoreboard.as_view(),name='get-scoreboard'),
+    path('GetMcqRating/',GetUserAnswersmcq.as_view(),name='GetMcqRating'),
 ]
+
 

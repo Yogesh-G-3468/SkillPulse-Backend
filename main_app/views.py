@@ -133,6 +133,34 @@ class ResourcesRetreive(APIView):
         print(output)
         return Response({"resources":output})
 
+class GetUserAnswersmcq(APIView):
+    permission_classes = ( IsAuthenticated, )
+    def post(self,request):
+        logger = logging.getLogger("GetUserAnswersmcq")
+        logger.info("User {} came in".format(request.user.username))
+        user_res = request.data.get("UserAnswer")
+
+        for x in user_res:
+            subject = x
+
+        avilable_answers = []
+        for i in user_res[subject]:
+            if user_res[subject][i] == "":
+                continue
+            else:
+                avilable_answers.append(i)
+
+        print(subject)
+        print(user_res)
+        print(avilable_answers)
+        
+        SubmitUserAns = Evaluate(subject,avilable_answers,request.user.username)
+        SubmitUserAns.mcqPercentage(user_res[subject])
+
+        return Response("working well")
+
+
+
 class GetUserAnswers(APIView):
     permission_classes = ( IsAuthenticated, )
     def post(self,request):
