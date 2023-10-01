@@ -151,7 +151,7 @@ class GetUserAnswersmcq(APIView):
                 avilable_answers.append(i)
 
         print(subject)
-        print(user_res)
+        print('I see this',user_res)
         print(avilable_answers)
         
         SubmitUserAns = Evaluate(subject,avilable_answers,request.user.username)
