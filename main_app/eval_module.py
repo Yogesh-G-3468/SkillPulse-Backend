@@ -134,15 +134,15 @@ class Evaluate:
             }
 
             for i in range(len(self.indi_mark)):
-                if i < 3:
+                if i <= 3:
                     final_score['Relational Databases'] += int((int(self.indi_mark[i]) / 30) * 100)
-                elif 3 <= i < 6:
+                elif 3 < i <= 6:
                     final_score['Database Design'] += int((int(self.indi_mark[i]) / 30) * 100)
-                elif 6 <= i < 9:
+                elif 6 < i <= 9:
                     final_score['Transactions and Concurrency'] += int((int(self.indi_mark[i]) / 30) * 100)
-                elif 9 <= i < 12:
+                elif 9 < i <= 12:
                     final_score['Data Storage and Querying'] += int((int(self.indi_mark[i]) / 30) * 100)
-                elif 12 <= i < 15:
+                elif 12 < i <= 15:
                     final_score['Advanced topics'] += int((int(self.indi_mark[i]) / 30) * 100)
                 else:
                     continue
@@ -167,15 +167,15 @@ class Evaluate:
             }
 
             for i in range(len(self.indi_mark)):
-                if i < 3:
+                if i <= 3:
                     final_score['Operating System Overview'] += int((int(self.indi_mark[i]) / 30) * 100)
-                elif 3 <= i < 6:
+                elif 3 < i <= 6:
                     final_score['Process Management'] += int((int(self.indi_mark[i]) / 30) * 100)
-                elif 6 <= i < 9:
+                elif 6 < i <= 9:
                     final_score['Storage Management and File System'] += int((int(self.indi_mark[i]) / 30) * 100)
-                elif 9 <= i < 12:
+                elif 9 < i <= 12:
                     final_score['I/O Systems'] += int((int(self.indi_mark[i]) / 30) * 100)
-                elif 12 <= i < 15:
+                elif 12 < i <= 15:
                     final_score['Case Study'] += int((int(self.indi_mark[i]) / 30) * 100)
                 else:
                     continue
@@ -198,15 +198,15 @@ class Evaluate:
             }
 
             for i in range(len(self.indi_mark)):
-                if i < 3:
+                if i <= 3:
                     final_score['Introduction and Physical layer'] += int((int(self.indi_mark[i]) / 30) * 100)
-                elif 3 <= i < 6:
+                elif 3 < i <= 6:
                     final_score['Data link layer and LAN'] += int((int(self.indi_mark[i]) / 30) * 100)
-                elif 6 <= i < 9:
+                elif 6 < i <= 9:
                     final_score['Network and Routing'] += int((int(self.indi_mark[i]) / 30) * 100)
-                elif 9 <= i < 12:
+                elif 9 < i <= 12:
                     final_score['Transport layer'] += int((int(self.indi_mark[i]) / 30) * 100)
-                elif 12 <= i < 15:
+                elif 12 < i <= 15:
                     final_score['Application layer'] += int((int(self.indi_mark[i]) / 30) * 100)
                 else:
                     continue
@@ -236,15 +236,15 @@ class Evaluate:
             }
 
             for i in range(1,len(score)+1):
-                if i < 3:
+                if i <= 3:
                     final_score['Basic Syntax and Language Fundamentals'] += int((int(score[str(i)]) / 3) * 100)
-                elif 3 <= i < 6:
+                elif 3 < i <= 6:
                     final_score['Functions and Scope'] += int((int(score[str(i)]) / 3) * 100)
-                elif 6 <= i < 9:
+                elif 6 <  i <= 9:
                     final_score['Arrays and Pointers'] += int((int(score[str(i)]) / 3) * 100)
-                elif 9 <= i < 12:
+                elif 9 < i <= 12:
                     final_score['Object-Oriented Programming (C++)'] += int((int(score[str(i)]) / 3) * 100)
-                elif 12 <= i < 16:
+                elif 12 < i <= 15:
                     final_score['File Handling and Input/Output'] += int((int(score[str(i)]) / 3) * 100)
                 else:
                     continue
@@ -271,15 +271,15 @@ class Evaluate:
             print(len(score))
             print(score)
             for i in range(1,len(score)+1):
-                if i < 3:
+                if i <= 3:
                     final_score['inheritance'] += int((int(score[str(i)]) / 3) * 100)
-                elif 3 <= i < 6:
+                elif 3 < i <= 6:
                     final_score['polymorphism'] += int((int(score[str(i)]) / 3) * 100)
-                elif 6 <= i < 9:
+                elif 6 < i <= 9:
                     final_score['encapsulation'] += int((int(score[str(i)]) / 3) * 100)
-                elif 9 <= i < 12:
+                elif 9 < i <= 12:
                     final_score['abstraction'] += int((int(score[str(i)]) / 3) * 100)
-                elif 12 <= i < 16:
+                elif 12 < i <= 15:
                     final_score['interfaces'] += int((int(score[str(i)]) / 3) * 100)
                 else:
                     continue
@@ -296,7 +296,6 @@ class Evaluate:
         
         elif "oops" in self.subject:
             final_score = {
-                "Object": 0,
                 "classes": 0,
                 "objects": 0,
                 "constructors": 0,
@@ -306,20 +305,20 @@ class Evaluate:
             }
 
             for i in range(1,len(score)+1):
-                if i < 3:
-                    final_score['Object'] += int((int(self.score[str(i)]) / 3) * 100)
-                elif 3 <= i < 6:
-                    final_score['classes'] += int((int(self.score[str(i)]) / 3) * 100)
-                elif 6 <= i < 9:
-                    final_score['objects'] += int((int(self.score[str(i)]) / 3) * 100)
-                elif 9 <= i < 12:
-                    final_score['constructors'] += int((int(self.score[str(i)]) / 3) * 100)
-                elif 12 <= i < 15:
-                    final_score['methods'] += int((int(self.score[str(i)]) / 3) * 100)
+                if i <= 3:
+                    final_score['classes'] += int((int(score[str(i)]) / 3) * 100)
+                elif 3 < i <= 6:
+                    final_score['objects'] += int((int(score[str(i)]) / 3) * 100)
+                elif 6 < i <= 9:
+                    final_score['constructors'] += int((int(score[str(i)]) / 3) * 100)
+                elif 9 < i <= 12:
+                    final_score['methods'] += int((int(score[str(i)]) / 3) * 100)
+                elif 12 < i <= 15:
+                    final_score['inheritance'] += int((int(score[str(i)]) / 3) * 100)
                 else:
-                    final_score['inheritance'] += int((int(self.score[i]) / 3) * 100)
+                    continue
 
-            final_score['totalMarks'] += (final_score['Object'] + final_score['classes'] + final_score['objects'] + final_score['constructors'] + final_score['methods'] + final_score['inheritance'])/60
+            final_score['totalMarks'] += (final_score['classes'] + final_score['objects'] + final_score['constructors'] + final_score['methods'] + final_score['inheritance'])/50
 
             if "EntryTest" in self.subject:
                 MongoUpdateTotalMark(final_score,self.user_id,"entryTest","oops","m1")
@@ -337,16 +336,18 @@ class Evaluate:
             }
 
             for i in range(1,len(score)+1 ):
-                if i < 3:
-                    final_score['arrays'] += int((int(self.score[str(i)]) / 3) * 100)
-                elif 3 <= i < 6:
-                    final_score['linkedLists'] += int((int(self.score[str(i)]) / 3) * 100)
-                elif 6 <= i < 9:
-                    final_score['stacks'] += int((int(self.score[str(i)]) / 3) * 100)
-                elif 9 <= i < 12:
-                    final_score['queues'] += int((int(self.score[str(i)]) / 3) * 100)
+                if i <= 3:
+                    final_score['arrays'] += int((int(score[str(i)]) / 3) * 100)
+                elif 3 < i <= 6:
+                    final_score['linkedLists'] += int((int(score[str(i)]) / 3) * 100)
+                elif 6 < i <= 9:
+                    final_score['stacks'] += int((int(score[str(i)]) / 3) * 100)
+                elif 9 < i <= 12:
+                    final_score['queues'] += int((int(score[str(i)]) / 3) * 100)
+                elif 12 < i <= 15:
+                    final_score['trees'] += int((int(score[str(i)]) / 3) * 100)
                 else:
-                    final_score['trees'] += int((int(self.score[str(i)]) / 3) * 100)
+                    continue
 
             final_score['totalMarks'] += (final_score['arrays'] + final_score['linkedLists'] + final_score['stacks'] + final_score['queues'] + final_score['trees'])/50
 
