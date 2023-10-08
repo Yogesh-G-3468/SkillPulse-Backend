@@ -200,7 +200,7 @@ class GetUserAnswers(APIView):
         }
         InsertRating(Indirating)
 
-        #send_result_mail(rating,subject,request.user.username)
+        send_result_mail(rating,subject,request.user.username)
 
         return Response({"scores":rating})
 

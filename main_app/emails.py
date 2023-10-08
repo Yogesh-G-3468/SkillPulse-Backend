@@ -15,9 +15,10 @@ def send_result_mail(data,subject,receiver):
 
 # Markdown table header
     markdown_table = ""
-
+    print("This is ratings---------------->",ratings)
     # Populate the table rows
     for question_number, question_data in ratings.items():
+
         markdown_table += f"----------\nquestion number: {question_number} \n rating:{question_data['rating']} \n Strong Topics:{', '.join(ast.literal_eval(question_data['Strength']))} \n Need to improve:{', '.join(ast.literal_eval(question_data['Weak']))} \n Suggestion:{question_data['Suggestion']} |\n----------\n"
 
     # Markdown table for final scores
