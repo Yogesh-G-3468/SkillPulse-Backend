@@ -10,7 +10,7 @@ import logging
 from django.conf import settings
 from django.core.mail import send_mail
 from .emails import send_result_mail
-from flask import request
+
 
 # Create your views here.
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',handlers=[
