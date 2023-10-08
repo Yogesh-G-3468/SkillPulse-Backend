@@ -105,6 +105,7 @@ def RetriveResources(userid,subject):
         logger.info("Retriving Resources from DB")
         collection = db['resourcesStore']
         x = collection.find_one({"user_id":userid,"subject":subject})
+        print(x['resources'])
         return x['resources']
     except:
         sub_name = subject[:-8]
@@ -114,19 +115,23 @@ def RetriveResources(userid,subject):
         resources = []
         collection=db['rating']
         x = collection.find_one({"user_id":userid,"subject":subject}) 
-        for i in x["ratings"][subject]:
-            print("i value:",i)
-            send.append(x["ratings"][subject][i]["Weak"])
-        print("send:",send)
-        for j in send:
-            query = sub_name + " " + j
-            print("query:",query)
-            for m in  search(query, tld='co.in', lang='en', num=2, start=0, stop=2, pause=2):
-                resources.append(m)
-        resources_collection = db['resourcesStore']
-        resources_insert = {"user_id":userid,"subject":subject,"resources":resources}
-        resources_collection.insert_one(resources_insert)
-        return resources
+
+        try:
+            for i in x["ratings"][subject]:
+                print("i value:",i)
+                send.append(x["ratings"][subject][i]["Weak"])
+            print("send:",send)
+            for j in send:
+                query = sub_name + " " + j
+                print("query:",query)
+                for m in  search(query, tld='co.in', lang='en', num=2, start=0, stop=2, pause=2):
+                    resources.append(m)
+            resources_collection = db['resourcesStore']
+            resources_insert = {"user_id":userid,"subject":subject,"resources":resources}
+            resources_collection.insert_one(resources_insert)
+            return resources
+        except:
+            return ['https://imgur.com/NXGpvFQ', 'https://imgur.com/NXGpvFQ']
 
 def SeniorProfiles():
     client =  MongoClient('mongodb+srv://test:{}@cluster0.1y89bs5.mongodb.net/?retryWrites=true&w=majority'.format(jumbla),server_api=ServerApi('1'))
