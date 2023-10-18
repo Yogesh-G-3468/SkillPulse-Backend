@@ -10,6 +10,8 @@ import logging
 from django.conf import settings
 from django.core.mail import send_mail
 from .emails import send_result_mail
+import threading
+import multiprocessing
 
 
 # Create your views here.
@@ -19,6 +21,26 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(level
     ],)
 
 
+
+def new_user_background_task(email,password,logger): #background task to create new user
+    user = User.objects.create_user(username=email,password=password)
+    user.save()
+    logger.info("User {} Created Successfully".format(email))
+
+    new_user_test_modeule = {
+        "user_id":email,
+        "scores":TestModulesHistory,
+    }
+
+    new_user_total_marks = {
+        "user_id":email,
+        "scores":TestTotalMarks,
+    }
+
+    MongoInsertTest(new_user_test_modeule)
+    MongoInsertTotalMark(new_user_total_marks)
+    print("new_user_test_modeule:",new_user_test_modeule)
+    print("new_user_total_marks:",new_user_total_marks)
 
 class RegisterNewUser(APIView):
     def post(self,request):
@@ -30,24 +52,8 @@ class RegisterNewUser(APIView):
             return Response({"message":"Please provide all the details"})
         
         try:
-            user = User.objects.create_user(username=email,password=password)
-            user.save()
-            logger.info("User {} Created Successfully".format(email))
-
-            new_user_test_modeule = {
-                "user_id":email,
-                "scores":TestModulesHistory,
-            }
-
-            new_user_total_marks = {
-                "user_id":email,
-                "scores":TestTotalMarks,
-            }
-
-            MongoInsertTest(new_user_test_modeule)
-            MongoInsertTotalMark(new_user_total_marks)
-            print("new_user_test_modeule:",new_user_test_modeule)
-            print("new_user_total_marks:",new_user_total_marks)
+            new_user_background_task_t = threading.Thread(target=new_user_background_task,args=(email,password,logger))
+            new_user_background_task_t.start()
 
             return Response({"message":"User {} Created Successfully".format(email)})
         except Exception as e:
@@ -160,6 +166,26 @@ class GetUserAnswersmcq(APIView):
         return Response("working well")
 
 
+def background_task(subject,avilable_answers,username,user_res): #this is the background task that sends user answer to chatgpt to retreive ratings
+    ai = Evaluate(subject,avilable_answers,username)
+
+    prompt=ai.generate_prompt(user_res)
+    print(prompt)
+    scores=ai.extraction(x:=ai.generate_chat_response(prompt))
+
+    print("gpt generated response:",x)
+    print("scores of the user:",scores)
+    
+    rating = ai.jsonify(scores)
+    
+    Indirating = {
+        "user_id":username,
+        "subject":subject,
+        "ratings":rating
+    }
+    InsertRating(Indirating)
+
+    send_result_mail(rating,subject,username)
 
 class GetUserAnswers(APIView):
     permission_classes = ( IsAuthenticated, )
@@ -182,27 +208,11 @@ class GetUserAnswers(APIView):
             else:
                 avilable_answers.append(i)
         print(avilable_answers)
-        ai = Evaluate(subject,avilable_answers,request.user.username)
-
-        prompt=ai.generate_prompt(user_res)
-        print(prompt)
-        scores=ai.extraction(x:=ai.generate_chat_response(prompt))
-
-        print("gpt generated response:",x)
-        print("scores of the user:",scores)
         
-        rating = ai.jsonify(scores)
-        
-        Indirating = {
-            "user_id":request.user.username,
-            "subject":subject,
-            "ratings":rating
-        }
-        InsertRating(Indirating)
+        background_task_t = threading.Thread(target=background_task,args=(subject,avilable_answers,request.user.username,user_res,))
+        background_task_t.start()
 
-        send_result_mail(rating,subject,request.user.username)
-
-        return Response({"scores":rating})
+        return Response({"scores":"processing in background"})
 
 class SeniorData(APIView):
     permission_classes = ( IsAuthenticated, )
