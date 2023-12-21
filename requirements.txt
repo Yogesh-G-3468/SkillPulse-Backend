@@ -4,6 +4,6 @@ markdown
 django-filter
 django-cors-headers
 pymongo
-openai
+openai==0.28.1
 python-dotenv
 google
