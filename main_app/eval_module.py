@@ -68,7 +68,7 @@ class Evaluate:
         DO'S:
         1)output only in the format i specify
         2)output range from 1 to 10
-        3)If both the sentences in the set are irrelevant give the rating as 0
+        3)If both the sentences in the set are not having any similar keywords or similar meaning then give the rating as 0.
         DONT'S
         1)Any other text other than the specified output 
         2)No explination and reasoning
