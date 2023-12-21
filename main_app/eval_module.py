@@ -66,9 +66,10 @@ class Evaluate:
         task 3: Give me an suggestion on what to learn and how to learn to improve my knowledge based on my answer in sentence 2. give it in <suggest></suggest> tag
 
         DO'S:
-        1)output only in the format i specify
-        2)output range from 1 to 10
-        3)If both the sentences in the set are not having any similar keywords or similar meaning then give the rating as 0.
+        1)when sentence 2 is not relevant to sentence 1 give rating as 0
+        2)output only in the format i specify
+        3)output range from 1 to 10
+        4)if sentence 1 and sentence 2 are conceptually similar give output based on similarity
         DONT'S
         1)Any other text other than the specified output 
         2)No explination and reasoning
@@ -77,7 +78,7 @@ class Evaluate:
         sample output  for each sets:
         <rating>number</rating>
         <strong>['strength1','stregth2']</strong>
-        <weak>['weakness1','weakness2']</weak>
+        <weak>['weakness1','weakness2']</weak> *required*
         <suggest>suggestion</suggest>\n Input : \n"""
 
 
@@ -89,9 +90,9 @@ class Evaluate:
                 q = questions[self.subject][i]
                 a = actual_answers[self.subject][i]
                 
-                para1="\nset "+str(n)+"\n"+"\nsentence 1:"+a+"\n"
+                para1="\nset "+str(n)+"\n"+"\n[sentence 1:"+a+"\n"
                 para2="sentence 2:" +q+"\n"
-                prompt+=para1+para2+"\n"
+                prompt+=para1+para2+"]\n"
                 n+=1
         
         logger.info("prompt for the AI generated")
