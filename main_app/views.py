@@ -166,26 +166,26 @@ class GetUserAnswersmcq(APIView):
         return Response("working well")
 
 
-def background_task(subject,avilable_answers,username,user_res): #this is the background task that sends user answer to chatgpt to retreive ratings
-    ai = Evaluate(subject,avilable_answers,username)
+# def background_task(subject,avilable_answers,username,user_res): #this is the background task that sends user answer to chatgpt to retreive ratings
+#     ai = Evaluate(subject,avilable_answers,username)
 
-    prompt=ai.generate_prompt(user_res)
-    print(prompt)
-    scores=ai.extraction(x:=ai.generate_chat_response(prompt))
+#     prompt=ai.generate_prompt(user_res)
+#     print(prompt)
+#     scores=ai.extraction(x:=ai.generate_chat_response(prompt))
 
-    print("gpt generated response:",x)
-    print("scores of the user:",scores)
+#     print("gpt generated response:",x)
+#     print("scores of the user:",scores)
     
-    rating = ai.jsonify(scores)
+#     rating = ai.jsonify(scores)
     
-    Indirating = {
-        "user_id":username,
-        "subject":subject,
-        "ratings":rating
-    }
-    InsertRating(Indirating)
+#     Indirating = {
+#         "user_id":username,
+#         "subject":subject,
+#         "ratings":rating
+#     }
+#     InsertRating(Indirating)
 
-    send_result_mail(rating,subject,username)
+#     send_result_mail(rating,subject,username)
 
 class GetUserAnswers(APIView):
     permission_classes = ( IsAuthenticated, )
@@ -208,9 +208,28 @@ class GetUserAnswers(APIView):
             else:
                 avilable_answers.append(i)
         print(avilable_answers)
+
+        ai = Evaluate(subject,avilable_answers,request.user.username)
+        prompt=ai.generate_prompt(user_res)
+        print(prompt)
+        scores=ai.extraction(x:=ai.generate_chat_response(prompt))
+
+        print("gpt generated response:",x)
+        print("scores of the user:",scores)
         
-        background_task_t = threading.Thread(target=background_task,args=(subject,avilable_answers,request.user.username,user_res,))
-        background_task_t.start()
+        rating = ai.jsonify(scores)
+        
+        Indirating = {
+            "user_id":request.user.username,
+            "subject":subject,
+            "ratings":rating
+        }
+        InsertRating(Indirating)
+
+        send_result_mail(rating,subject,request.user.username)
+        
+        # background_task_t = threading.Thread(target=background_task,args=(subject,avilable_answers,request.user.username,user_res,))
+        # background_task_t.start()
 
         return Response({"scores":"processing in background"})
 
